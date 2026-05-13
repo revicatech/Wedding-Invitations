@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دعوة كتب كتاب - عبد الرحمن وهديل</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Cinzel:wght@400;600;700&family=Imperial+Script&display=swap"
+        rel="stylesheet">
+    <style>
+        /* المتغيرات والألوان المستوحاة من الصور (Light Luxury) */
+        :root {
+            --env-color: #0c3427;
+            /* لون الظرف الأخضر الملكي */
+            --env-color-darker: #082218;
+            --env-seal: #b8934d;
+            --env-seal-border: #a37e36;
+            --bg-light: #ffffff;
+            /* لون الخلفية العام */
+            --gold: #c59b27;
+            --gold-light: #eaddab;
+            --text-dark: #2c2c2c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body,
+        html {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            font-family: 'Amiri', serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        body::-webkit-scrollbar,
+        html::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+        }
+
+        /* ---------------------------------- */
+        /* 1. شاشة الظرف المغلق (Full Screen) */
+        /* ---------------------------------- */
+        #envelope-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: transparent;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            transition: opacity 0.5s ease 0.5s, visibility 0.5s ease 0.5s;
+            cursor: pointer;
+        }
+
+        #envelope-wrapper.is-locked {
+            pointer-events: none;
+        }
+
+        /* أجزاء الظرف */
+        .env-flap {
+            position: absolute;
+            background-color: var(--env-color);
+            background-image:
+                url('https://www.transparenttextures.com/patterns/p6.png'),
+                radial-gradient(120% 80% at 30% 20%, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0) 65%),
+                linear-gradient(160deg, rgba(0, 0, 0, 0.25), rgba(255, 255, 255, 0.02));
+            transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* الجزء العلوي (الذي سيفتح) */
+        .env-top {
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            clip-path: polygon(0 0, 100% 0, 0 100%);
+            z-index: 4;
+            filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.25));
+        }
+
+        .env-bottom {
+            bottom: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            clip-path: polygon(100% 0, 100% 100%, 0 100%);
+            z-index: 3;
+            filter: drop-shadow(0 -8px 16px rgba(0, 0, 0, 0.25));
+        }
+
+        /* الختم الشمعي */
+        .wax-seal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background: var(--env-seal);
+            border-radius: 50%;
+            box-shadow: 2px 6px 14px rgba(0, 0, 0, 0.35);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 5;
+            border: 2px solid var(--env-seal-border);
+        }
+
+        .seal-inner {
+            width: 60px;
+            height: 60px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .rings-icon {
+            width: 40px;
+            opacity: 0.9;
+        }
+
+        .click-hint {
+            position: absolute;
+            bottom: 15vh;
+            color: var(--gold);
+            font-size: 1.1rem;
+            z-index: 5;
+            animation: pulse 2s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 0.4;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* أنيميشن الفتح */
+        .env-open .env-top {
+            transform: translate(-100%, -100%);
+        }
+
+        .env-open .env-bottom {
+            transform: translate(100%, 100%);
+        }
+
+        .env-open .click-hint {
+            opacity: 0;
+        }
+
+
+        /* ---------------------------------- */
+        /* 2. المحتوى العام والتمرير (Scroll) */
+        /* ---------------------------------- */
+        #main-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .hidden-scroll {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .show-scroll {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Aref Ruqaa', serif;
+            color: var(--gold);
+            font-weight: normal;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(197, 155, 39, 0.2);
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .divider {
+            width: 40px;
+            height: 1px;
+            background-color: var(--gold);
+            margin: 20px auto;
+        }
+
+
+        /* ---------------------------------- */
+        /* 3. الأقسام المخصصة (Vibe Sections) */
+        /* ---------------------------------- */
+
+        /* الإطار البيضاوي للعروسين (Vintage Oval Frame) */
+        .hero {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            background: url('image.png') center/cover no-repeat;
+            justify-content: flex-start;
+            padding-top: 18vh;
+        }
+
+        .hero h1 {
+            color: #111111;
+            font-family: 'Imperial Script', cursive;
+            font-size: 2.2rem;
+            letter-spacing: 1px;
+            text-shadow: none;
+        }
+
+        .hero .tagline {
+            margin-bottom: 10px;
+            font-family: 'Imperial Script', cursive;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+            text-transform: none;
+            color: #2c2c2c;
+        }
+
+        .hero .divider {
+            background-color: var(--gold);
+        }
+
+        .hero p {
+            color: var(--text-dark) !important;
+            text-shadow: none;
+        }
+
+        /* دعوة الفرح الأساسية */
+        .opening {
+            background-color: var(--env-color);
+            background-image:
+                radial-gradient(120% 80% at 30% 20%, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0) 65%),
+                linear-gradient(160deg, rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0.02));
+            color: #f7f1e2;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .opening::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: url('https://www.transparenttextures.com/patterns/p6.png');
+            opacity: 0.2;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .opening > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .opening p,
+        .opening h3 {
+            color: #f7f1e2;
+        }
+
+        /* قصر الليل والتفاصيل (Cinematic Night Palace) */
+        .details {
+            /* صورة قصر ليلي فخم */
+            background: linear-gradient(to bottom, rgba(253, 250, 246, 0.95), rgba(253, 250, 246, 0.85), rgba(253, 250, 246, 0.95)), url('image2.png') center/cover fixed;
+        }
+
+        .details-box {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(197, 155, 39, 0.3);
+            padding: 2.5rem 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .details-box p {
+            color: var(--text-dark);
+        }
+
+        .details-box .gold-text {
+            color: var(--gold);
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 1.5rem;
+        }
+
+        /* العداد التنازلي */
+        .countdown {
+            background-color: var(--bg-light);
+        }
+
+        .countdown-card {
+            position: relative;
+            width: 100%;
+            max-width: 520px;
+            padding: 28px 22px 26px;
+            background: linear-gradient(180deg, #ffffff, #fbf7ee);
+            border: 1px solid rgba(197, 155, 39, 0.25);
+            border-radius: 18px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .countdown-glow {
+            position: absolute;
+            top: -40px;
+            right: -30px;
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle, rgba(197, 155, 39, 0.18), rgba(197, 155, 39, 0));
+            filter: blur(6px);
+            pointer-events: none;
+        }
+
+        .countdown-subtitle {
+            font-size: 1.05rem;
+            color: #5a4b2a;
+            margin-bottom: 16px;
+        }
+
+        .countdown-wrapper {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            direction: ltr;
+            gap: 12px;
+            margin: 10px 0 16px;
+        }
+
+        .time-box {
+            border: 1px solid rgba(197, 155, 39, 0.3);
+            padding: 14px 10px;
+            border-radius: 12px;
+            background: linear-gradient(145deg, #ffffff, #fdfaf6);
+            box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.8);
+            direction: rtl;
+        }
+
+        .time-box span {
+            display: block;
+            font-size: 2rem;
+            font-family: 'Aref Ruqaa', serif;
+            color: var(--gold);
+        }
+
+        .time-box p {
+            font-size: 0.8rem;
+            margin: 0;
+            color: #6a5a34;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .countdown-progress {
+            width: 100%;
+            height: 8px;
+            border-radius: 999px;
+            background: rgba(197, 155, 39, 0.2);
+            overflow: hidden;
+            margin: 8px 0 12px;
+        }
+
+        .countdown-progress-bar {
+            display: block;
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #b68a1f, #eaddab);
+            transition: width 0.6s ease;
+        }
+
+        .countdown-note {
+            margin: 0;
+            font-size: 0.95rem;
+            color: #7a6a3f;
+        }
+
+        @media (max-width: 480px) {
+            .countdown-wrapper {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        /* الخاتمة السينمائية */
+        .ending {
+            background: radial-gradient(circle at center, #ffffff 0%, #fdfaf6 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ending > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .ending-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 280px;
+            height: 280px;
+            background: radial-gradient(circle, rgba(197, 155, 39, 0.12) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .particles {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--gold);
+            border-radius: 50%;
+            opacity: 0;
+            animation: float var(--dur, 8s) var(--delay, 0s) infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0% {
+                opacity: 0;
+                transform: translateY(100vh) translateX(0);
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) translateX(var(--drift, 20px));
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <audio id="bg-music" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="envelope-wrapper" class="is-locked" onclick="openInvitation()">
+        <div class="env-flap env-top"></div>
+        <div class="env-flap env-bottom">
+            <div class="wax-seal">
+                <div class="seal-inner">
+                    <svg viewBox="0 0 100 100" class="rings-icon" aria-hidden="true">
+                        <circle cx="40" cy="60" r="20" fill="none" stroke="white" stroke-width="3" />
+                        <circle cx="60" cy="60" r="20" fill="none" stroke="white" stroke-width="3" />
+                        <rect x="35" y="35" width="10" height="10" transform="rotate(45 40 40)" fill="white" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="main-content">
+
+        <section class="hero hidden-scroll">
+            <p class="tagline">Where the most beautiful stories begin</p>
+            <h1>Abdulrahman &amp; Hadeel</h1>
+            <div class="divider"></div>
+        </section>
+
+        <section class="opening hidden-scroll">
+            <h2>دعوة فرح</h2>
+            <div class="divider"></div>
+            <p style="font-size: 1.1rem;">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
+            <p>ندعوكم لمشاركتنا أجمل لحظات العمر</p>
+            <p>تتشرف عائلتا</p>
+            <h3 style="margin-bottom: 5px;">الحاج هيثم فتال يبرودي و عائلته</h3>
+            <p>و</p>
+            <h3 style="margin-top: 5px;">المرحوم عامر خليفة و عائلته</h3>
+            <p style="margin-top: 20px; color: #aaa;">بدعوتكم لحضور مراسم عقد القران<br>ومشاركتنا فرحتنا الكبرى.</p>
+        </section>
+
+        <section class="details hidden-scroll">
+            <div class="details-box">
+                <h2>تفاصيل كتب الكتاب</h2>
+                <div class="divider"></div>
+
+                <p class="gold-text">الزمان</p>
+                <p>مساء الجمعة<br>الموافق 22 - 5</p>
+
+                <div class="divider" style="width: 20px; opacity: 0.5;"></div>
+
+                <p class="gold-text">المكان</p>
+                <p>في منزل جدة المخطوبة</p>
+                <p style="font-size: 0.9rem; color: #999; margin-top: 10px;">يلدا، جانب جامع الغزالي<br>جانب حلويات نور
+                    المدينة</p>
+            </div>
+        </section>
+
+        <section class="countdown hidden-scroll">
+            <h2>نبضات حتى اللقاء</h2>
+            <div class="divider"></div>
+            <div class="countdown-card">
+                <div class="countdown-glow"></div>
+                <p class="countdown-subtitle">نعدّ اللحظات حتى اجتماع القلوب</p>
+                <div class="countdown-wrapper">
+                    <div class="time-box">
+                        <span id="days">00</span>
+                        <p>يوم</p>
+                    </div>
+                    <div class="time-box">
+                        <span id="hours">00</span>
+                        <p>ساعة</p>
+                    </div>
+                    <div class="time-box">
+                        <span id="minutes">00</span>
+                        <p>دقيقة</p>
+                    </div>
+                    <div class="time-box">
+                        <span id="seconds">00</span>
+                        <p>ثانية</p>
+                    </div>
+                </div>
+                <div class="countdown-progress">
+                    <span class="countdown-progress-bar" id="countdown-progress"></span>
+                </div>
+                <p class="countdown-note">كل ثانية تقرّبنا من الفرح</p>
+            </div>
+        </section>
+
+        <section class="ending hidden-scroll">
+            <div class="ending-glow"></div>
+            <div class="particles" id="ending-particles"></div>
+            <h1>عقداً من القلب</h1>
+            <p style="color: #aaa;">بحضوركم تكتمل الفرحة وتزدان ليلتنا.<br>نسأل الله أن يبارك لنا ولكم.</p>
+            <div class="divider"></div>
+            <p style="font-family: 'Aref Ruqaa', serif; color: var(--gold); font-size: 2rem;">عبد الرحمن & هديل</p>
+        </section>
+
+    </div>
+
+    <script>
+        const envelopeWrapper = document.getElementById('envelope-wrapper');
+
+        if (envelopeWrapper) {
+            if (document.fonts && document.fonts.ready) {
+                document.fonts.ready.then(() => {
+                    envelopeWrapper.classList.remove('is-locked');
+                });
+            } else {
+                window.addEventListener('load', () => {
+                    envelopeWrapper.classList.remove('is-locked');
+                });
+            }
+        }
+
+        let particlesInitialized = false;
+
+        function initParticles() {
+            if (particlesInitialized) return;
+            const container = document.getElementById('ending-particles');
+            if (!container) return;
+            particlesInitialized = true;
+
+            for (let i = 0; i < 30; i += 1) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.cssText = `
+                    left:${Math.random() * 100}%;
+                    --dur:${7 + Math.random() * 8}s;
+                    --delay:${Math.random() * 6}s;
+                    --drift:${(Math.random() - 0.5) * 60}px;
+                    width:${1 + Math.random() * 2}px;
+                    height:${1 + Math.random() * 2}px;
+                    opacity:0;
+                `;
+                container.appendChild(p);
+            }
+        }
+
+        // دالة فتح الظرف
+        function openInvitation() {
+            const wrapper = document.getElementById('envelope-wrapper');
+            if (wrapper.classList.contains('env-open')) return; // لمنع النقر المتعدد
+
+            const mainContent = document.getElementById('main-content');
+            const music = document.getElementById('bg-music');
+
+            // إظهار المحتوى الداخلي فورًا لكي يظهر خلف الظرف أثناء فتحه
+            mainContent.style.display = 'block';
+            void mainContent.offsetWidth; // Trigger reflow
+            mainContent.style.opacity = '1';
+            initParticles();
+
+            // تشغيل الأنيميشن
+            wrapper.classList.add('env-open');
+
+            // تشغيل الموسيقى
+            music.play().catch(error => console.log("Audio play failed (browser policy):", error));
+
+            // إخفاء الـ wrapper بالكامل بعد اكتمال تأثير الفتح لتحرير الواجهة
+            setTimeout(() => {
+                wrapper.style.opacity = '0';
+                wrapper.style.visibility = 'hidden';
+            }, 1000); // Wait for the envelope flaps to finish opening before hiding the wrapper
+        }
+
+        // تأثيرات التمرير كقصة (Scroll Animation)
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show-scroll');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.hidden-scroll').forEach((section) => {
+            observer.observe(section);
+        });
+
+        // إعداد العداد التنازلي (مضبوط على 22 مايو)
+        const targetDate = new Date("May 22, 2026 18:00:00").getTime();
+
+        const initialDistance = targetDate - Date.now();
+
+        const countdownInterval = setInterval(function () {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                document.querySelector('.countdown-wrapper').innerHTML = "<h3 style='color: var(--gold)'>لقد حانت اللحظة!</h3>";
+                const progressBar = document.getElementById("countdown-progress");
+                if (progressBar) progressBar.style.width = "100%";
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = days < 10 ? "0" + days : days;
+            document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
+            document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+
+            const progress = Math.max(0, Math.min(1, 1 - (distance / initialDistance)));
+            const progressBar = document.getElementById("countdown-progress");
+            if (progressBar) progressBar.style.width = (progress * 100).toFixed(1) + "%";
+        }, 1000);
+    </script>
+</body>
+
+</html>
