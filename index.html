@@ -7,9 +7,9 @@
     <title>دعوة كتب كتاب - عبد الرحمن وهديل</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Cinzel:wght@400;600;700&family=Imperial+Script&display=swap"
-        rel="stylesheet">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Imperial+Script&display=block">
+    <link href="https://fonts.googleapis.com/css2?family=Imperial+Script&display=block" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
     <style>
         /* المتغيرات والألوان المستوحاة من الصور (Light Luxury) */
         :root {
@@ -35,7 +35,7 @@
         html {
             background-color: var(--bg-light);
             color: var(--text-dark);
-            font-family: 'Amiri', serif;
+            font-family: 'Aref Ruqaa', serif;
             overflow-x: hidden;
             scroll-behavior: smooth;
             scrollbar-width: none;
@@ -251,7 +251,7 @@
 
         .hero h1 {
             color: #111111;
-            font-family: 'Imperial Script', cursive;
+            font-family: 'Imperial Script';
             font-size: 2.2rem;
             letter-spacing: 1px;
             text-shadow: none;
@@ -259,7 +259,7 @@
 
         .hero .tagline {
             margin-bottom: 10px;
-            font-family: 'Imperial Script', cursive;
+            font-family: 'Imperial Script';
             font-size: 0.8rem;
             letter-spacing: 0.5px;
             text-transform: none;
@@ -491,9 +491,9 @@
 
 <body>
 
-    <audio id="bg-music" loop>
+    <!-- <audio id="bg-music" loop>
         <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
-    </audio>
+    </audio> -->
 
     <div id="envelope-wrapper" class="is-locked" onclick="openInvitation()">
         <div class="env-flap env-top"></div>
