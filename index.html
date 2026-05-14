@@ -1,711 +1,791 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دعوة كتب كتاب - عبد الرحمن وهديل</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Imperial+Script&display=block">
-    <link href="https://fonts.googleapis.com/css2?family=Imperial+Script&display=block" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        /* المتغيرات والألوان المستوحاة من الصور (Light Luxury) */
-        :root {
-            --env-color: #0c3427;
-            /* لون الظرف الأخضر الملكي */
-            --env-color-darker: #082218;
-            --env-seal: #b8934d;
-            --env-seal-border: #a37e36;
-            --bg-light: #ffffff;
-            /* لون الخلفية العام */
-            --gold: #c59b27;
-            --gold-light: #eaddab;
-            --text-dark: #2c2c2c;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>دعوة زفاف — عبد الرحمن و هديل</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Scheherazade+New:wght@400;700&family=Aref+Ruqaa+Ink:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+:root {
+  --bg-main: #F7F3EE;
+  --bg-card: #F3EEE8;
+  --bg-card-secondary: #EFE7DC;
+  --title-color: #2F2118;
+  --text-color: #4A372B;
+  --gold: #C6A46A;
+  --gold-dark: #9A7A45;
+  --bride-color: #A14E63;
+  --groom-color: #7B3E4A;
+  --accent: #8D6E8F;
+  --border-color: #DCCFC2;
+  --shadow: rgba(120, 90, 60, 0.08);
+  --plum: #5C2E4F;
+  --dusty-rose: #B07A8C;
+  --burgundy: #4B1F2F;
+  --soft-mauve: #9B7A92;
 
-        body,
-        html {
-            background-color: var(--bg-light);
-            color: var(--text-dark);
-            font-family: 'Aref Ruqaa', serif;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
+  /* mapped aliases */
+  --cream: #F7F3EE;
+  --gold-light: #D9BC90;
+  --gold-pale: #EAD9BC;
+  --purple: var(--accent);
+  --purple-dark: var(--groom-color);
+  --purple-light: var(--soft-mauve);
+  --purple-pale: #E8DCE8;
+  --text: var(--title-color);
+  --text-soft: var(--text-color);
+}
 
-        body::-webkit-scrollbar,
-        html::-webkit-scrollbar {
-            width: 0;
-            height: 0;
-        }
+html { scroll-behavior: smooth; }
 
-        /* ---------------------------------- */
-        /* 1. شاشة الظرف المغلق (Full Screen) */
-        /* ---------------------------------- */
-        #envelope-wrapper {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: transparent;
-            z-index: 9999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            transition: opacity 0.5s ease 0.5s, visibility 0.5s ease 0.5s;
-            cursor: pointer;
-        }
+body {
+  margin: 0;
+  font-family: 'Amiri', serif;
+  background: url('bg.jpg') center center / cover fixed;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
 
-        #envelope-wrapper.is-locked {
-            pointer-events: none;
-        }
+/* ═══════════════════════════════════
+   DOOR INTRO
+   ═══════════════════════════════════ */
+.doors-overlay {
+  position: fixed; inset: 0; z-index: 1000;
+  display: flex;
+  cursor: pointer;
+}
 
-        /* أجزاء الظرف */
-        .env-flap {
-            position: absolute;
-            background-color: var(--env-color);
-            background-image:
-                url('https://www.transparenttextures.com/patterns/p6.png'),
-                radial-gradient(120% 80% at 30% 20%, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0) 65%),
-                linear-gradient(160deg, rgba(0, 0, 0, 0.25), rgba(255, 255, 255, 0.02));
-            transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+.door {
+  flex: 1;
+  position: relative;
+  transition: transform 1.4s cubic-bezier(.76, 0, .17, 1);
+  overflow: hidden;
+}
+.door img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
 
-        /* الجزء العلوي (الذي سيفتح) */
-        .env-top {
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            clip-path: polygon(0 0, 100% 0, 0 100%);
-            z-index: 4;
-            filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.25));
-        }
+.door-left {
+  box-shadow: inset -1px 0 0 rgba(182,149,69,.3);
+}
+.door-right {
+  box-shadow: inset 1px 0 0 rgba(182,149,69,.3);
+}
 
-        .env-bottom {
-            bottom: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            clip-path: polygon(100% 0, 100% 100%, 0 100%);
-            z-index: 3;
-            filter: drop-shadow(0 -8px 16px rgba(0, 0, 0, 0.25));
-        }
+.door-left.open  { transform: translateX(-105%); }
+.door-right.open { transform: translateX(105%); }
 
-        /* الختم الشمعي */
-        .wax-seal {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80px;
-            height: 80px;
-            background: var(--env-seal);
-            border-radius: 50%;
-            box-shadow: 2px 6px 14px rgba(0, 0, 0, 0.35);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 5;
-            border: 2px solid var(--env-seal-border);
-        }
+/* Door panels */
+.door-panel {
+  width: 75%;
+  height: 82%;
+  border: 2.5px solid var(--gold-pale);
+  border-radius: 4px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.door-panel::before {
+  content: '';
+  position: absolute; inset: 6px;
+  border: 1.5px solid var(--gold-pale);
+  border-radius: 3px;
+  opacity: .5;
+}
 
-        .seal-inner {
-            width: 60px;
-            height: 60px;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+/* Door inner panels (top and bottom rectangles) */
+.door-panel::after {
+  content: '';
+  position: absolute;
+  left: 12%; right: 12%;
+  top: 55%; bottom: 8%;
+  border: 1.5px solid var(--gold-pale);
+  border-radius: 2px;
+  opacity: .4;
+}
 
-        .rings-icon {
-            width: 40px;
-            opacity: 0.9;
-        }
+.door-inner-top {
+  position: absolute;
+  left: 12%; right: 12%;
+  top: 8%; bottom: 55%;
+  border: 1.5px solid var(--gold-pale);
+  border-radius: 2px;
+  opacity: .4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-        .click-hint {
-            position: absolute;
-            bottom: 15vh;
-            color: var(--gold);
-            font-size: 1.1rem;
-            z-index: 5;
-            animation: pulse 2s infinite;
-            pointer-events: none;
-        }
+.door-letter {
+  font-family: 'Aref Ruqaa Ink', serif;
+  font-size: clamp(4rem, 12vw, 6rem);
+  color: var(--gold);
+  position: relative;
+  z-index: 2;
+  text-shadow: 1px 1px 3px rgba(182, 149, 69, .15);
+}
 
-        @keyframes pulse {
+/* Door handles */
+.door-handle {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.door-left .door-handle { right: 14%; }
+.door-right .door-handle { left: 14%; }
 
-            0%,
-            100% {
-                opacity: 0.4;
-            }
+.handle-knob {
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, var(--gold-light), var(--gold));
+  box-shadow: 0 2px 4px rgba(0,0,0,.15);
+}
+.handle-bar {
+  width: 6px; height: 36px;
+  background: linear-gradient(to bottom, var(--gold-light), var(--gold));
+  border-radius: 3px;
+  box-shadow: 0 2px 4px rgba(0,0,0,.12);
+}
 
-            50% {
-                opacity: 1;
-            }
-        }
+.door-hint {
+  position: fixed;
+  bottom: max(40px, 6vh);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1001;
+  color: var(--gold);
+  font-family: 'Amiri', serif;
+  font-size: 1rem;
+  animation: hintPulse 2.2s ease-in-out infinite;
+  white-space: nowrap;
+  letter-spacing: 1px;
+  pointer-events: none;
+}
+@keyframes hintPulse {
+  0%,100% { opacity: .45; } 50% { opacity: 1; }
+}
 
-        /* أنيميشن الفتح */
-        .env-open .env-top {
-            transform: translate(-100%, -100%);
-        }
+/* ═══════════════════════════════════
+   MAIN CARD
+   ═══════════════════════════════════ */
+.card-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 20px 12px 40px;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
 
-        .env-open .env-bottom {
-            transform: translate(100%, 100%);
-        }
+.card {
+  background: rgba(243, 238, 232, 0.93);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid var(--border-color);
+  width: 100%;
+  max-width: 440px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow:
+    0 20px 60px rgba(0,0,0,.35),
+    0 2px 6px rgba(0,0,0,.15),
+    inset 0 1px 0 rgba(255,255,255,0.3);
+  position: relative;
+  opacity: 0;
+  transform: translateY(20px);
+}
+.card.show {
+  animation: cardIn .8s .2s ease both;
+}
+@keyframes cardIn {
+  to { opacity: 1; transform: translateY(0); }
+}
 
-        .env-open .click-hint {
-            opacity: 0;
-        }
+/* ─── Floral watercolor corners (SVG) ─── */
+.floral-top, .floral-bottom {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+.floral-top { height: 130px; }
+.floral-bottom { height: 100px; }
+.floral-top svg, .floral-bottom svg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
 
+/* ─── Content ─── */
+.content {
+  padding: 0 28px;
+  text-align: center;
+}
 
-        /* ---------------------------------- */
-        /* 2. المحتوى العام والتمرير (Scroll) */
-        /* ---------------------------------- */
-        #main-content {
-            display: none;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
+/* Verse */
+.verse {
+  font-family: 'Scheherazade New', serif;
+  font-size: clamp(2rem, 6.5vw, 2.6rem);
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 40%, var(--gold-dark) 70%, var(--gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: none;
+  filter: drop-shadow(0 1px 2px rgba(154,122,69,.25));
+  line-height: 2;
+  margin-top: -18px;
+  margin-bottom: 20px;
+  opacity: 0;
+}
+.verse.anim { animation: fadeUp .7s .4s ease both; }
 
-        section {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 2rem;
-            position: relative;
-        }
+/* Families row */
+.families {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  opacity: 0;
+}
+.families.anim { animation: fadeUp .7s .6s ease both; }
 
-        .hidden-scroll {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
+.fam-col {
+  flex: 1;
+  text-align: center;
+  padding: 14px 8px;
+  background: linear-gradient(160deg, rgba(123,94,167,.06), rgba(123,94,167,.01));
+  border: 1px solid rgba(123,94,167,.12);
+  border-radius: 12px;
+}
+.fam-label {
+  font-size: .72rem;
+  color: var(--purple);
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+.fam-name {
+  font-family: 'Amiri', serif;
+  font-size: .92rem;
+  color: var(--text);
+  font-weight: 700;
+  line-height: 1.7;
+}
+.fam-rip {
+  font-size: .78rem;
+  color: var(--text-soft);
+  opacity: .7;
+}
 
-        .show-scroll {
-            opacity: 1;
-            transform: translateY(0);
-        }
+/* Invite text */
+.invite-text {
+  color: var(--purple);
+  font-size: 1.2rem;
+  line-height: 2;
+  margin-bottom: 10px;
+  opacity: 0;
+}
+.invite-text.anim { animation: fadeUp .7s .8s ease both; }
 
-        h1,
-        h2,
-        h3 {
-            font-family: 'Aref Ruqaa', serif;
-            color: var(--gold);
-            font-weight: normal;
-        }
+/* Names */
+.names-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 8px 0 18px;
+  opacity: 0;
+}
+.names-row.anim { animation: scaleIn .8s 1s ease both; }
 
-        h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            text-shadow: 0 2px 10px rgba(197, 155, 39, 0.2);
-        }
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(.85); }
+  to { opacity: 1; transform: scale(1); }
+}
 
-        h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
+.name-big {
+  /* font-family: 'Aref Ruqaa Ink', serif; */
+  font-size: clamp(2.2rem, 8vw, 3rem);
+  color: var(--gold-dark);
+}
+.rings-icon {
+  width: 70px;
+  flex-shrink: 0;
+}
 
-        p {
-            font-size: 1.2rem;
-            line-height: 1.8;
-            margin-bottom: 1rem;
-        }
+/* Labels above names */
+.name-label {
+  font-size: .72rem;
+  color: var(--purple);
+  letter-spacing: 1px;
+  margin-bottom: -2px;
+}
 
-        .divider {
-            width: 40px;
-            height: 1px;
-            background-color: var(--gold);
-            margin: 20px auto;
-        }
+/* Blessing */
+.blessing {
+  font-size: 1rem;
+  color: var(--text-soft);
+  line-height: 2;
+  margin-bottom: 22px;
+  opacity: 0;
+}
+.blessing.anim { animation: fadeUp .7s 1.2s ease both; }
 
+/* Gold divider */
+.gold-line {
+  width: 60px;
+  height: 1.5px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+  margin: 0 auto 20px;
+}
 
-        /* ---------------------------------- */
-        /* 3. الأقسام المخصصة (Vibe Sections) */
-        /* ---------------------------------- */
+/* ─── Details table ─── */
+.details-bar {
+  display: flex;
+  border-top: 1px solid rgba(123,94,167,.12);
+  border-bottom: 1px solid rgba(123,94,167,.12);
+  margin: 0 -28px 20px;
+  padding: 14px 8px;
+  opacity: 0;
+}
+.details-bar.anim { animation: fadeUp .7s 1.35s ease both; }
 
-        /* الإطار البيضاوي للعروسين (Vintage Oval Frame) */
-        .hero {
-            background-color: var(--bg-light);
-            color: var(--text-dark);
-            background: url('image.webp') center/cover no-repeat;
-            justify-content: flex-start;
-            padding-top: 18vh;
-        }
+.det-col {
+  flex: 1;
+  text-align: center;
+}
+.det-label {
+  display: block;
+  font-size: .60rem;
+  color: var(--purple);
+  letter-spacing: 1.5px;
+  margin-bottom: 4px;
+}
+.det-val {
+  font-family: 'Scheherazade New', serif;
+  font-size: 0.975rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.5;
+}
+.det-val small {
+  display: block;
+  font-size: .70rem;
+  font-weight: 400;
+  color: var(--text-soft);
+}
+.det-sep {
+  width: 1px;
+  background: rgba(123,94,167,.15);
+  align-self: stretch;
+}
 
-        .hero h1 {
-            color: #111111;
-            font-family: 'Imperial Script';
-            font-size: 2.2rem;
-            letter-spacing: 1px;
-            text-shadow: none;
-        }
+/* Location */
+.location-info {
+  font-size: .88rem;
+  color: var(--text-soft);
+  line-height: 1.9;
+  margin-bottom: 18px;
+  opacity: 0;
+}
+.location-info.anim { animation: fadeUp .7s 1.5s ease both; }
 
-        .hero .tagline {
-            margin-bottom: 10px;
-            font-family: 'Imperial Script';
-            font-size: 0.8rem;
-            letter-spacing: 0.5px;
-            text-transform: none;
-            color: #2c2c2c;
-        }
+/* Note */
+.note-box {
+  background: rgba(123,94,167,.06);
+  border: 1px dashed rgba(123,94,167,.22);
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-size: .86rem;
+  color: var(--text-soft);
+  line-height: 1.9;
+  margin-bottom: 22px;
+  opacity: 0;
+}
+.note-box.anim { animation: fadeUp .7s 1.6s ease both; }
 
-        .hero .divider {
-            background-color: var(--gold);
-        }
+/* Buttons */
+.btn-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 4px;
+  margin-bottom: 8px;
+  opacity: 0;
+}
+.btn-stack.anim { animation: fadeUp .7s 1.7s ease both; }
 
-        .hero p {
-            color: var(--text-dark) !important;
-            text-shadow: none;
-        }
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 20px;
+  border-radius: 50px;
+  font-family: 'Amiri', serif;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.btn:active { transform: scale(.97); }
 
-        /* دعوة الفرح الأساسية */
-        .opening {
-            background-color: var(--env-color);
-            background-image:
-                radial-gradient(120% 80% at 30% 20%, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0) 65%),
-                linear-gradient(160deg, rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0.02));
-            color: #f7f1e2;
-            position: relative;
-            overflow: hidden;
-        }
+.btn-purple {
+  background: linear-gradient(135deg, var(--purple), var(--purple-light));
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(123,94,167,.3);
+}
+.btn-purple:hover { box-shadow: 0 6px 22px rgba(123,94,167,.45); transform: translateY(-1px); }
 
-        .opening::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background-image: url('https://www.transparenttextures.com/patterns/p6.png');
-            opacity: 0.2;
-            pointer-events: none;
-            z-index: 0;
-        }
+.btn-outline-green {
+  background: transparent;
+  border: 1.5px solid #88b88a;
+  color: #4a8a4d;
+}
 
-        .opening > * {
-            position: relative;
-            z-index: 1;
-        }
+.btn-outline-gray {
+  background: transparent;
+  border: 1.5px solid rgba(0,0,0,.12);
+  color: var(--text-soft);
+  font-size: .92rem;
+}
 
-        .opening p,
-        .opening h3 {
-            color: #f7f1e2;
-        }
+/* Footer inside card */
+.card-footer {
+  text-align: center;
+  padding: 12px;
+  font-size: .7rem;
+  color: var(--text-soft);
+  opacity: .3;
+}
 
-        /* قصر الليل والتفاصيل (Cinematic Night Palace) */
-        .details {
-            /* صورة قصر ليلي فخم */
-            background: linear-gradient(to bottom, rgba(253, 250, 246, 0.95), rgba(253, 250, 246, 0.85), rgba(253, 250, 246, 0.95)), url('image2.webp') center/cover fixed;
-        }
+/* ─── Animations ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
-        .details-box {
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid rgba(197, 155, 39, 0.3);
-            padding: 2.5rem 2rem;
-            border-radius: 15px;
-            backdrop-filter: blur(5px);
-            width: 100%;
-            max-width: 400px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-        }
-
-        .details-box p {
-            color: var(--text-dark);
-        }
-
-        .details-box .gold-text {
-            color: var(--gold);
-            font-family: 'Aref Ruqaa', serif;
-            font-size: 1.5rem;
-        }
-
-        /* العداد التنازلي */
-        .countdown {
-            background-color: var(--bg-light);
-        }
-
-        .countdown-card {
-            position: relative;
-            width: 100%;
-            max-width: 520px;
-            padding: 28px 22px 26px;
-            background: linear-gradient(180deg, #ffffff, #fbf7ee);
-            border: 1px solid rgba(197, 155, 39, 0.25);
-            border-radius: 18px;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-            overflow: hidden;
-        }
-
-        .countdown-glow {
-            position: absolute;
-            top: -40px;
-            right: -30px;
-            width: 180px;
-            height: 180px;
-            background: radial-gradient(circle, rgba(197, 155, 39, 0.18), rgba(197, 155, 39, 0));
-            filter: blur(6px);
-            pointer-events: none;
-        }
-
-        .countdown-subtitle {
-            font-size: 1.05rem;
-            color: #5a4b2a;
-            margin-bottom: 16px;
-        }
-
-        .countdown-wrapper {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            direction: ltr;
-            gap: 12px;
-            margin: 10px 0 16px;
-        }
-
-        .time-box {
-            border: 1px solid rgba(197, 155, 39, 0.3);
-            padding: 14px 10px;
-            border-radius: 12px;
-            background: linear-gradient(145deg, #ffffff, #fdfaf6);
-            box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.8);
-            direction: rtl;
-        }
-
-        .time-box span {
-            display: block;
-            font-size: 2rem;
-            font-family: 'Aref Ruqaa', serif;
-            color: var(--gold);
-        }
-
-        .time-box p {
-            font-size: 0.8rem;
-            margin: 0;
-            color: #6a5a34;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .countdown-progress {
-            width: 100%;
-            height: 8px;
-            border-radius: 999px;
-            background: rgba(197, 155, 39, 0.2);
-            overflow: hidden;
-            margin: 8px 0 12px;
-        }
-
-        .countdown-progress-bar {
-            display: block;
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #b68a1f, #eaddab);
-            transition: width 0.6s ease;
-        }
-
-        .countdown-note {
-            margin: 0;
-            font-size: 0.95rem;
-            color: #7a6a3f;
-        }
-
-        @media (max-width: 480px) {
-            .countdown-wrapper {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-        }
-
-        /* الخاتمة السينمائية */
-        .ending {
-            background: radial-gradient(circle at center, #ffffff 0%, #fdfaf6 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .ending > * {
-            position: relative;
-            z-index: 1;
-        }
-
-        .ending-glow {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 280px;
-            height: 280px;
-            background: radial-gradient(circle, rgba(197, 155, 39, 0.12) 0%, transparent 70%);
-            border-radius: 50%;
-            z-index: 0;
-        }
-
-        .particles {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            overflow: hidden;
-            z-index: 0;
-        }
-
-        .particle {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: var(--gold);
-            border-radius: 50%;
-            opacity: 0;
-            animation: float var(--dur, 8s) var(--delay, 0s) infinite ease-in-out;
-        }
-
-        @keyframes float {
-            0% {
-                opacity: 0;
-                transform: translateY(100vh) translateX(0);
-            }
-            10% {
-                opacity: 0.6;
-            }
-            90% {
-                opacity: 0.3;
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(-100px) translateX(var(--drift, 20px));
-            }
-        }
-    </style>
+/* ─── Falling petals canvas ─── */
+#petals {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+.card-wrap { position: relative; z-index: 1; }
+</style>
 </head>
-
 <body>
 
-    <!-- <audio id="bg-music" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
-    </audio> -->
+<!-- ═══ DOOR OVERLAY ═══ -->
+<div class="doors-overlay" id="doors" onclick="openDoors()">
 
-    <div id="envelope-wrapper" class="is-locked" onclick="openInvitation()">
-        <div class="env-flap env-top"></div>
-        <div class="env-flap env-bottom">
-            <div class="wax-seal">
-                <div class="seal-inner">
-                    <svg viewBox="0 0 100 100" class="rings-icon" aria-hidden="true">
-                        <circle cx="40" cy="60" r="20" fill="none" stroke="white" stroke-width="3" />
-                        <circle cx="60" cy="60" r="20" fill="none" stroke="white" stroke-width="3" />
-                        <rect x="35" y="35" width="10" height="10" transform="rotate(45 40 40)" fill="white" />
-                    </svg>
-                </div>
-            </div>
+  <!-- Left door -->
+  <div class="door door-right" id="doorR">
+    <img src="door2.png" alt="door">
+  </div>
+
+  <!-- Right door -->
+  <div class="door door-left" id="doorL">
+    <img src="door1.png" alt="door">
+  </div>
+
+</div>
+<div class="door-hint" id="doorHint">✦ تفضلوا بالدخول ✦</div>
+
+<!-- ═══ FALLING PETALS ═══ -->
+<canvas id="petals"></canvas>
+
+<!-- ═══ MAIN CARD ═══ -->
+<div class="card-wrap">
+  <div class="card" id="mainCard">
+
+    <!-- Top floral decoration -->
+    <div class="floral-top">
+      <svg viewBox="0 0 440 130" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="gf1" cx="0%" cy="0%" r="60%">
+            <stop offset="0%" stop-color="#c9a0d8" stop-opacity=".55"/>
+            <stop offset="100%" stop-color="#c9a0d8" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="gf2" cx="100%" cy="0%" r="60%">
+            <stop offset="0%" stop-color="#c9a0d8" stop-opacity=".55"/>
+            <stop offset="100%" stop-color="#c9a0d8" stop-opacity="0"/>
+          </radialGradient>
+          <filter id="blur1"><feGaussianBlur stdDeviation="3"/></filter>
+          <filter id="blur2"><feGaussianBlur stdDeviation="5"/></filter>
+        </defs>
+        <!-- Left cluster -->
+        <ellipse cx="0" cy="0" rx="120" ry="80" fill="url(#gf1)"/>
+        <ellipse cx="35" cy="25" rx="38" ry="22" fill="#c5a0d4" opacity=".45" filter="url(#blur1)" transform="rotate(-20 35 25)"/>
+        <ellipse cx="15" cy="55" rx="30" ry="16" fill="#b890c8" opacity=".5" filter="url(#blur1)" transform="rotate(-40 15 55)"/>
+        <ellipse cx="65" cy="15" rx="25" ry="13" fill="#d8b8e4" opacity=".4" filter="url(#blur1)" transform="rotate(15 65 15)"/>
+        <ellipse cx="50" cy="50" rx="20" ry="10" fill="#a878b8" opacity=".35" filter="url(#blur1)"/>
+        <ellipse cx="80" cy="35" rx="18" ry="9" fill="#d4b0e0" opacity=".3" filter="url(#blur2)" transform="rotate(30 80 35)"/>
+        <circle cx="30" cy="18" r="8" fill="#e0c8ec" opacity=".5" filter="url(#blur1)"/>
+        <circle cx="55" cy="40" r="5" fill="#dcc0e8" opacity=".45" filter="url(#blur1)"/>
+        <ellipse cx="5" cy="85" rx="22" ry="12" fill="#c5a0d4" opacity=".3" filter="url(#blur2)" transform="rotate(-30 5 85)"/>
+        <!-- Green leaves left -->
+        <ellipse cx="90" cy="55" rx="14" ry="5" fill="#8aaa78" opacity=".3" filter="url(#blur1)" transform="rotate(50 90 55)"/>
+        <ellipse cx="70" cy="65" rx="12" ry="4" fill="#7a9a68" opacity=".25" filter="url(#blur1)" transform="rotate(30 70 65)"/>
+        <!-- Right cluster -->
+        <ellipse cx="440" cy="0" rx="120" ry="80" fill="url(#gf2)"/>
+        <ellipse cx="405" cy="25" rx="38" ry="22" fill="#c5a0d4" opacity=".45" filter="url(#blur1)" transform="rotate(20 405 25)"/>
+        <ellipse cx="425" cy="55" rx="30" ry="16" fill="#b890c8" opacity=".5" filter="url(#blur1)" transform="rotate(40 425 55)"/>
+        <ellipse cx="375" cy="15" rx="25" ry="13" fill="#d8b8e4" opacity=".4" filter="url(#blur1)" transform="rotate(-15 375 15)"/>
+        <ellipse cx="390" cy="50" rx="20" ry="10" fill="#a878b8" opacity=".35" filter="url(#blur1)"/>
+        <ellipse cx="360" cy="35" rx="18" ry="9" fill="#d4b0e0" opacity=".3" filter="url(#blur2)" transform="rotate(-30 360 35)"/>
+        <circle cx="410" cy="18" r="8" fill="#e0c8ec" opacity=".5" filter="url(#blur1)"/>
+        <circle cx="385" cy="40" r="5" fill="#dcc0e8" opacity=".45" filter="url(#blur1)"/>
+        <ellipse cx="435" cy="85" rx="22" ry="12" fill="#c5a0d4" opacity=".3" filter="url(#blur2)" transform="rotate(30 435 85)"/>
+        <!-- Green leaves right -->
+        <ellipse cx="350" cy="55" rx="14" ry="5" fill="#8aaa78" opacity=".3" filter="url(#blur1)" transform="rotate(-50 350 55)"/>
+        <ellipse cx="370" cy="65" rx="12" ry="4" fill="#7a9a68" opacity=".25" filter="url(#blur1)" transform="rotate(-30 370 65)"/>
+      </svg>
+    </div>
+
+    <div class="content">
+
+      <!-- Verse -->
+      <div class="verse" data-anim>وَخَلَقْنَاكُمْ أَزْوَاجاً</div>
+
+      <!-- Families -->
+      <div class="families" data-anim>
+        <div class="fam-col">
+          <div class="fam-label">أهل العريس</div>
+          <div class="fam-name">الحاج هيثم<br>فتال يبرودي</div>
+          <div class="fam-name" style="margin-top:2px">وعائلته</div>
         </div>
-    </div>
+        <div class="fam-col">
+          <div class="fam-label">أهل العروس</div>
+          <div class="fam-name">المرحوم<br>عامر خليفة</div>
+          <div class="fam-name" style="margin-top:2px">وعائلته</div>
+        </div>
+      </div>
 
-    <div id="main-content">
+      <!-- Invite -->
+      <div class="invite-text" data-anim>
+        نتشرف بدعوتكم لحضور حفل<br><strong style="font-size:1.35rem">زفاف</strong>
+      </div>
 
-        <section class="hero hidden-scroll">
-            <p class="tagline">Where the most beautiful stories begin</p>
-            <h1>Abdulrahman &amp; Hadeel</h1>
-            <div class="divider"></div>
-        </section>
+      <!-- Names with labels -->
+      <div class="names-row" data-anim>
+        <div style="text-align:center">
+          <div class="name-big">عبد الرحمن</div>
+        </div>
+        <svg class="rings-icon" viewBox="0 0 80 70" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="rg1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#D9BC90"/>
+              <stop offset="40%" stop-color="#C6A46A"/>
+              <stop offset="70%" stop-color="#B8944A"/>
+              <stop offset="100%" stop-color="#9A7A45"/>
+            </linearGradient>
+            <linearGradient id="rg2" x1="100%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#D9BC90"/>
+              <stop offset="40%" stop-color="#C6A46A"/>
+              <stop offset="70%" stop-color="#B8944A"/>
+              <stop offset="100%" stop-color="#9A7A45"/>
+            </linearGradient>
+            <filter id="rs"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.18)"/></filter>
+          </defs>
+          <!-- Left ring -->
+          <circle cx="28" cy="38" r="20" fill="none" stroke="url(#rg1)" stroke-width="6" filter="url(#rs)"/>
+          <!-- Right ring -->
+          <circle cx="52" cy="38" r="20" fill="none" stroke="url(#rg2)" stroke-width="6" filter="url(#rs)"/>
+          <!-- Highlight arcs -->
+          <path d="M 14 28 A 20 20 0 0 1 34 18" fill="none" stroke="rgba(255,235,160,0.6)" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M 38 18 A 20 20 0 0 1 66 28" fill="none" stroke="rgba(255,235,160,0.6)" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        <div style="text-align:center">
+          <div class="name-big">هديل</div>
+        </div>
+      </div>
 
-        <section class="opening hidden-scroll">
-            <h2>دعوة فرح</h2>
-            <div class="divider"></div>
-            <p style="font-size: 1.1rem;">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
-            <p>ندعوكم لمشاركتنا أجمل لحظات العمر</p>
-            <p>تتشرف عائلتا</p>
-            <h3 style="margin-bottom: 5px;">الحاج هيثم فتال يبرودي و عائلته</h3>
-            <p>و</p>
-            <h3 style="margin-top: 5px;">المرحوم عامر خليفة و عائلته</h3>
-            <p style="margin-top: 20px; color: #aaa;">بدعوتكم لحضور مراسم عقد القران<br>ومشاركتنا فرحتنا الكبرى.</p>
-        </section>
+      <!-- Blessing -->
+      <div class="blessing" data-anim>
+        بارك الله لهما وبارك عليهما<br>
+        وجمع بينهما في خير
+      </div>
 
-        <section class="details hidden-scroll">
-            <div class="details-box">
-                <h2>تفاصيل كتب الكتاب</h2>
-                <div class="divider"></div>
-
-                <p class="gold-text">الزمان</p>
-                <p>مساء الجمعة<br>الموافق 22 - 5</p>
-
-                <div class="divider" style="width: 20px; opacity: 0.5;"></div>
-
-                <p class="gold-text">المكان</p>
-                <p>في منزل جدة المخطوبة</p>
-                <p style="font-size: 0.9rem; color: #999; margin-top: 10px;">يلدا، جانب جامع الغزالي<br>جانب حلويات نور
-                    المدينة</p>
-            </div>
-        </section>
-
-        <section class="countdown hidden-scroll">
-            <h2>نبضات حتى اللقاء</h2>
-            <div class="divider"></div>
-            <div class="countdown-card">
-                <div class="countdown-glow"></div>
-                <p class="countdown-subtitle">نعدّ اللحظات حتى اجتماع القلوب</p>
-                <div class="countdown-wrapper">
-                    <div class="time-box">
-                        <span id="days">00</span>
-                        <p>يوم</p>
-                    </div>
-                    <div class="time-box">
-                        <span id="hours">00</span>
-                        <p>ساعة</p>
-                    </div>
-                    <div class="time-box">
-                        <span id="minutes">00</span>
-                        <p>دقيقة</p>
-                    </div>
-                    <div class="time-box">
-                        <span id="seconds">00</span>
-                        <p>ثانية</p>
-                    </div>
-                </div>
-                <div class="countdown-progress">
-                    <span class="countdown-progress-bar" id="countdown-progress"></span>
-                </div>
-                <p class="countdown-note">كل ثانية تقرّبنا من الفرح</p>
-            </div>
-        </section>
-
-        <section class="ending hidden-scroll">
-            <div class="ending-glow"></div>
-            <div class="particles" id="ending-particles"></div>
-            <h1>عقداً من القلب</h1>
-            <p style="color: #aaa;">بحضوركم تكتمل الفرحة وتزدان ليلتنا.<br>نسأل الله أن يبارك لنا ولكم.</p>
-            <div class="divider"></div>
-            <p style="font-family: 'Aref Ruqaa', serif; color: var(--gold); font-size: 2rem;">عبد الرحمن & هديل</p>
-        </section>
+      <div class="gold-line"></div>
 
     </div>
 
-    <script>
-        const envelopeWrapper = document.getElementById('envelope-wrapper');
+    <!-- Details bar -->
+    <div class="details-bar" data-anim>
+      <div class="det-col">
+        <span class="det-label">الساعة</span>
+        <span class="det-val">مساءً</span>
+      </div>
+      <div class="det-sep"></div>
+      <div class="det-col">
+        <span class="det-label">المكان</span>
+        <span class="det-val">يلدا</span>
+      </div>
+      <div class="det-sep"></div>
+      <div class="det-col">
+        <span class="det-label">الجمعة</span>
+        <span class="det-val">22.05.2026</span>
+      </div>
+    </div>
 
-        if (envelopeWrapper) {
-            if (document.fonts && document.fonts.ready) {
-                document.fonts.ready.then(() => {
-                    envelopeWrapper.classList.remove('is-locked');
-                });
-            } else {
-                window.addEventListener('load', () => {
-                    envelopeWrapper.classList.remove('is-locked');
-                });
-            }
-        }
+    <div class="content">
 
-        let particlesInitialized = false;
+      <!-- Location info -->
+      <div class="location-info" data-anim>
+        📍 حد جامع الغزالي<br>
+        حلويات نور المدينة<br>
+        في منزل جدة المخطوبة
+      </div>
 
-        function initParticles() {
-            if (particlesInitialized) return;
-            const container = document.getElementById('ending-particles');
-            if (!container) return;
-            particlesInitialized = true;
+      <!-- Buttons -->
+      <div class="btn-stack" data-anim>
+        <a href="https://maps.google.com/maps?q=33.465750784405486,36.320426698896256" target="_blank" class="btn btn-purple">
+          📍 موقع المنزل
+        </a>
+        <button class="btn btn-outline-green" onclick="confirmAttend()">
+          💬 تأكيد الحضور
+        </button>
+      </div>
 
-            for (let i = 0; i < 30; i += 1) {
-                const p = document.createElement('div');
-                p.className = 'particle';
-                p.style.cssText = `
-                    left:${Math.random() * 100}%;
-                    --dur:${7 + Math.random() * 8}s;
-                    --delay:${Math.random() * 6}s;
-                    --drift:${(Math.random() - 0.5) * 60}px;
-                    width:${1 + Math.random() * 2}px;
-                    height:${1 + Math.random() * 2}px;
-                    opacity:0;
-                `;
-                container.appendChild(p);
-            }
-        }
+    </div>
 
-        // دالة فتح الظرف
-        function openInvitation() {
-            const wrapper = document.getElementById('envelope-wrapper');
-            if (wrapper.classList.contains('env-open')) return; // لمنع النقر المتعدد
+    <!-- Bottom floral -->
+    <div class="floral-bottom">
+      <svg viewBox="0 0 440 100" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="gf3" cx="0%" cy="100%" r="60%">
+            <stop offset="0%" stop-color="#c9a0d8" stop-opacity=".45"/>
+            <stop offset="100%" stop-color="#c9a0d8" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="gf4" cx="100%" cy="100%" r="60%">
+            <stop offset="0%" stop-color="#c9a0d8" stop-opacity=".45"/>
+            <stop offset="100%" stop-color="#c9a0d8" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <ellipse cx="0" cy="100" rx="110" ry="70" fill="url(#gf3)"/>
+        <ellipse cx="30" cy="80" rx="32" ry="18" fill="#c5a0d4" opacity=".4" filter="url(#blur1)" transform="rotate(25 30 80)"/>
+        <ellipse cx="55" cy="90" rx="22" ry="12" fill="#b890c8" opacity=".35" filter="url(#blur1)"/>
+        <circle cx="20" cy="70" r="6" fill="#e0c8ec" opacity=".4" filter="url(#blur1)"/>
+        <ellipse cx="440" cy="100" rx="110" ry="70" fill="url(#gf4)"/>
+        <ellipse cx="410" cy="80" rx="32" ry="18" fill="#c5a0d4" opacity=".4" filter="url(#blur1)" transform="rotate(-25 410 80)"/>
+        <ellipse cx="385" cy="90" rx="22" ry="12" fill="#b890c8" opacity=".35" filter="url(#blur1)"/>
+        <circle cx="420" cy="70" r="6" fill="#e0c8ec" opacity=".4" filter="url(#blur1)"/>
+      </svg>
+    </div>
 
-            const mainContent = document.getElementById('main-content');
-            const music = document.getElementById('bg-music');
+    <div class="card-footer">عبد الرحمن ♡ هديل — ٢٠٢٦</div>
 
-            // إظهار المحتوى الداخلي فورًا لكي يظهر خلف الظرف أثناء فتحه
-            mainContent.style.display = 'block';
-            void mainContent.offsetWidth; // Trigger reflow
-            mainContent.style.opacity = '1';
-            initParticles();
+  </div>
+</div>
 
-            // تشغيل الأنيميشن
-            wrapper.classList.add('env-open');
+<script>
+/* ═══ DOORS ═══ */
+let opened = false;
+function openDoors() {
+  if (opened) return;
+  opened = true;
+  document.getElementById('doorL').classList.add('open');
+  document.getElementById('doorR').classList.add('open');
+  document.getElementById('doorHint').style.opacity = '0';
+  setTimeout(() => {
+    document.getElementById('doors').style.display = 'none';
+    document.getElementById('doorHint').style.display = 'none';
+    showCard();
+  }, 1500);
+}
 
-            // تشغيل الموسيقى
-            music.play().catch(error => console.log("Audio play failed (browser policy):", error));
+/* ═══ CARD REVEAL + STAGGERED ANIMATIONS ═══ */
+function showCard() {
+  const card = document.getElementById('mainCard');
+  card.classList.add('show');
+  const items = card.querySelectorAll('[data-anim]');
+  items.forEach((el, i) => {
+    setTimeout(() => el.classList.add('anim'), 400 + i * 200);
+  });
+  startPetals();
+}
 
-            // إخفاء الـ wrapper بالكامل بعد اكتمال تأثير الفتح لتحرير الواجهة
-            setTimeout(() => {
-                wrapper.style.opacity = '0';
-                wrapper.style.visibility = 'hidden';
-            }, 1000); // Wait for the envelope flaps to finish opening before hiding the wrapper
-        }
+/* ═══ FALLING PETALS ═══ */
+function startPetals() {
+  const c = document.getElementById('petals');
+  const ctx = c.getContext('2d');
+  let W, H;
+  function resize() { W = c.width = innerWidth; H = c.height = innerHeight; }
+  resize(); window.addEventListener('resize', resize);
 
-        // تأثيرات التمرير كقصة (Scroll Animation)
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.15
-        };
+  const petals = [];
+  const colors = [
+    'rgba(197,160,212,.18)',
+    'rgba(184,144,200,.15)',
+    'rgba(216,184,228,.13)',
+    'rgba(200,170,180,.13)',
+    'rgba(168,120,184,.12)',
+  ];
 
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('show-scroll');
-                }
-            });
-        }, observerOptions);
+  for (let i = 0; i < 18; i++) {
+    petals.push({
+      x: Math.random() * W,
+      y: Math.random() * -H,
+      w: Math.random() * 8 + 4,
+      h: Math.random() * 5 + 3,
+      rot: Math.random() * 360,
+      dx: (Math.random() - .5) * .4,
+      dy: Math.random() * .6 + .3,
+      dr: (Math.random() - .5) * 1.2,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      wobble: Math.random() * Math.PI * 2,
+    });
+  }
 
-        document.querySelectorAll('.hidden-scroll').forEach((section) => {
-            observer.observe(section);
-        });
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    petals.forEach(p => {
+      p.x += p.dx + Math.sin(p.wobble) * .3;
+      p.y += p.dy;
+      p.rot += p.dr;
+      p.wobble += .015;
+      if (p.y > H + 20) { p.y = -20; p.x = Math.random() * W; }
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot * Math.PI / 180);
+      ctx.beginPath();
+      ctx.ellipse(0, 0, p.w, p.h, 0, 0, Math.PI * 2);
+      ctx.fillStyle = p.color;
+      ctx.fill();
+      ctx.restore();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+}
 
-        // إعداد العداد التنازلي (مضبوط على 22 مايو)
-        const targetDate = new Date("May 22, 2026 18:00:00").getTime();
+/* ═══ ACTIONS ═══ */
+function confirmAttend() {
+  const msg = encodeURIComponent('السلام عليكم، أود تأكيد حضوري لحفل زفاف عبد الرحمن وهديل بإذن الله 🌸');
+  window.open('https://wa.me/?text=' + msg, '_blank');
+}
 
-        const initialDistance = targetDate - Date.now();
+function addCalendar() {
+  const s = '20260522T190000', e = '20260522T230000';
+  const t = encodeURIComponent('حفل زفاف عبد الرحمن وهديل');
+  const d = encodeURIComponent('يلدا — حد جامع الغزالي، حلويات نور المدينة');
+  window.open('https://www.google.com/calendar/render?action=TEMPLATE&text=' + t + '&dates=' + s + '/' + e + '&details=' + d, '_blank');
+}
+</script>
 
-        const countdownInterval = setInterval(function () {
-            const now = new Date().getTime();
-            const distance = targetDate - now;
-
-            if (distance < 0) {
-                clearInterval(countdownInterval);
-                document.querySelector('.countdown-wrapper').innerHTML = "<h3 style='color: var(--gold)'>لقد حانت اللحظة!</h3>";
-                const progressBar = document.getElementById("countdown-progress");
-                if (progressBar) progressBar.style.width = "100%";
-                return;
-            }
-
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            document.getElementById("days").innerText = days < 10 ? "0" + days : days;
-            document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
-            document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
-            document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
-
-            const progress = Math.max(0, Math.min(1, 1 - (distance / initialDistance)));
-            const progressBar = document.getElementById("countdown-progress");
-            if (progressBar) progressBar.style.width = (progress * 100).toFixed(1) + "%";
-        }, 1000);
-    </script>
 </body>
-
 </html>
