@@ -3,8 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>دعوة زفاف — عبد الرحمن و هديل</title>
-<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Scheherazade+New:wght@400;700&family=Aref+Ruqaa+Ink:wght@400;700&display=swap" rel="stylesheet">
+<title>دعوة عقد قران — عبد الرحمن و هديل</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Scheherazade+New:wght@400;700&family=Aref+Ruqaa+Ink:wght@400;700&family=Reem+Kufi:wght@400..700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
@@ -42,17 +44,18 @@ html { scroll-behavior: smooth; }
 body {
   margin: 0;
   font-family: 'Amiri', serif;
-  background: linear-gradient(135deg, #2a1a10 0%, #1a0f08 50%, #2a1a10 100%);
+  background: url('bg.webp') center center / cover fixed;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-  min-height: 100vh;
 }
 
+/* ═══════════════════════════════════
+   DOOR INTRO
+   ═══════════════════════════════════ */
 .doors-overlay {
   position: fixed; inset: 0; z-index: 1000;
   display: flex;
   cursor: pointer;
-  background: linear-gradient(135deg, #1a0d08, #2d1a0f, #1a0d08);
 }
 
 .door {
@@ -60,40 +63,24 @@ body {
   position: relative;
   transition: transform 1.4s cubic-bezier(.76, 0, .17, 1);
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(160deg, #2d1a0f, #1a0d08);
-  border: 1px solid rgba(198,164,106,.15);
+}
+.door img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
 }
 
-.door-left { border-left: none; }
-.door-right { border-right: none; }
+.door-left {
+  box-shadow: inset -1px 0 0 rgba(182,149,69,.3);
+}
+.door-right {
+  box-shadow: inset 1px 0 0 rgba(182,149,69,.3);
+}
 
 .door-left.open  { transform: translateX(-105%); }
 .door-right.open { transform: translateX(105%); }
-
-.door-inner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-}
-
-.door-letter {
-  font-family: 'Aref Ruqaa Ink', serif;
-  font-size: clamp(5rem, 15vw, 8rem);
-  color: var(--gold);
-  text-shadow: 0 0 40px rgba(198,164,106,.3);
-  line-height: 1;
-}
-
-.door-ornament {
-  width: 60px;
-  height: 2px;
-  background: linear-gradient(to right, transparent, var(--gold), transparent);
-}
 
 .door-hint {
   position: fixed;
@@ -113,18 +100,19 @@ body {
   0%,100% { opacity: .45; } 50% { opacity: 1; }
 }
 
+/* ═══════════════════════════════════
+   MAIN CARD
+   ═══════════════════════════════════ */
 .card-wrap {
   display: flex;
   justify-content: center;
   padding: 20px 12px 40px;
   min-height: 100vh;
   min-height: 100dvh;
-  position: relative;
-  z-index: 1;
 }
 
 .card {
-  background: rgba(243, 238, 232, 0.95);
+  background: rgba(243, 238, 232, 0.93);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   border: 1px solid var(--border-color);
@@ -133,8 +121,8 @@ body {
   border-radius: 20px;
   overflow: hidden;
   box-shadow:
-    0 20px 60px rgba(0,0,0,.45),
-    0 2px 6px rgba(0,0,0,.2),
+    0 20px 60px rgba(0,0,0,.35),
+    0 2px 6px rgba(0,0,0,.15),
     inset 0 1px 0 rgba(255,255,255,0.3);
   position: relative;
   opacity: 0;
@@ -147,6 +135,7 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* ─── Floral watercolor corners (SVG) ─── */
 .floral-top, .floral-bottom {
   position: relative;
   width: 100%;
@@ -161,11 +150,13 @@ body {
   height: 100%;
 }
 
+/* ─── Content ─── */
 .content {
   padding: 0 28px;
   text-align: center;
 }
 
+/* Verse */
 .verse {
   font-family: 'Scheherazade New', serif;
   font-size: clamp(2rem, 6.5vw, 2.6rem);
@@ -174,6 +165,7 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  text-shadow: none;
   filter: drop-shadow(0 1px 2px rgba(154,122,69,.25));
   line-height: 2;
   margin-top: -18px;
@@ -182,6 +174,7 @@ body {
 }
 .verse.anim { animation: fadeUp .7s .4s ease both; }
 
+/* Families row */
 .families {
   display: flex;
   gap: 12px;
@@ -211,7 +204,13 @@ body {
   font-weight: 700;
   line-height: 1.7;
 }
+.fam-rip {
+  font-size: .78rem;
+  color: var(--text-soft);
+  opacity: .7;
+}
 
+/* Invite text */
 .invite-text {
   color: var(--purple);
   font-size: 1.2rem;
@@ -221,12 +220,12 @@ body {
 }
 .invite-text.anim { animation: fadeUp .7s .8s ease both; }
 
-/* ═══ LUXURY NAMES SECTION ═══ */
+/* ═══ LUXURY NAMES ═══ */
 .names-row {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
   margin: 8px 0 18px;
   opacity: 0;
 }
@@ -237,42 +236,113 @@ body {
   to { opacity: 1; transform: scale(1); }
 }
 
-.name-wrapper {
-  text-align: center;
+.name-block {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
 }
 
-/* The big luxury name */
+.name-ornament-wrap {
+  position: relative;
+  padding: 10px 6px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+/* Corner brackets */
+.name-ornament-wrap::before,
+.name-ornament-wrap::after {
+  content: '';
+  position: absolute;
+  width: 16px; height: 16px;
+}
+.name-ornament-wrap::before {
+  top: 0; right: 0;
+  border-top: 1.5px solid var(--gold);
+  border-right: 1.5px solid var(--gold);
+}
+.name-ornament-wrap::after {
+  bottom: 0; left: 0;
+  border-bottom: 1.5px solid var(--gold);
+  border-left: 1.5px solid var(--gold);
+}
+.corner-tl, .corner-br {
+  position: absolute;
+  width: 16px; height: 16px;
+}
+.corner-tl { top: 0; left: 0; border-top: 1.5px solid var(--gold); border-left: 1.5px solid var(--gold); }
+.corner-br { bottom: 0; right: 0; border-bottom: 1.5px solid var(--gold); border-right: 1.5px solid var(--gold); }
+
+/* The luxury name text */
 .name-big {
-  font-family: 'Aref Ruqaa Ink', serif;
-  font-size: clamp(2.6rem, 9vw, 3.6rem);
+  font-family: 'Reem Kufi', serif;
+  font-size: 2.4rem;
   font-weight: 700;
-  background: linear-gradient(160deg, #e8d080 0%, #C6A46A 30%, #9A7A45 60%, #C6A46A 80%, #e8d080 100%);
+  background: linear-gradient(
+    170deg,
+    #f5e6a0 0%,
+    #e8c96a 18%,
+    #C6A46A 38%,
+    #9A7A45 55%,
+    #C6A46A 72%,
+    #e8c96a 88%,
+    #f5e6a0 100%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  filter: drop-shadow(0 2px 4px rgba(154,122,69,.35));
-  line-height: 1.2;
+  filter: drop-shadow(0 2px 5px rgba(154,122,69,.45));
+  line-height: 1.15;
   letter-spacing: 2px;
 }
 
-/* Decorative underline below each name */
-.name-underline {
-  width: 70%;
-  height: 1.5px;
+/* Decorative underline */
+.name-divider {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 85%;
+  margin-top: 6px;
+}
+.div-line {
+  flex: 1;
+  height: 1px;
   background: linear-gradient(to right, transparent, var(--gold), transparent);
-  margin: 0 auto;
+}
+.div-gem {
+  width: 5px; height: 5px;
+  background: var(--gold);
+  transform: rotate(45deg);
+  flex-shrink: 0;
 }
 
-/* The rings SVG in the middle */
+/* Middle separator */
+.name-sep {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  flex-shrink: 0;
+}
+.sep-line {
+  width: 1px; height: 16px;
+  background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+}
+.sep-diamond {
+  width: 7px; height: 7px;
+  background: var(--gold);
+  transform: rotate(45deg);
+}
+
 .rings-icon {
   width: 64px;
   flex-shrink: 0;
 }
 
+/* Blessing */
 .blessing {
   font-size: 1rem;
   color: var(--text-soft);
@@ -282,6 +352,7 @@ body {
 }
 .blessing.anim { animation: fadeUp .7s 1.2s ease both; }
 
+/* Gold divider */
 .gold-line {
   width: 60px;
   height: 1.5px;
@@ -289,6 +360,7 @@ body {
   margin: 0 auto 20px;
 }
 
+/* ─── Details table ─── */
 .details-bar {
   display: flex;
   border-top: 1px solid rgba(123,94,167,.12);
@@ -329,6 +401,7 @@ body {
   align-self: stretch;
 }
 
+/* Location */
 .location-info {
   font-size: .88rem;
   color: var(--text-soft);
@@ -338,6 +411,7 @@ body {
 }
 .location-info.anim { animation: fadeUp .7s 1.5s ease both; }
 
+/* Buttons */
 .btn-stack {
   display: flex;
   flex-direction: column;
@@ -371,6 +445,7 @@ body {
 }
 .btn-purple:hover { box-shadow: 0 6px 22px rgba(123,94,167,.45); transform: translateY(-1px); }
 
+/* Footer inside card */
 .card-footer {
   text-align: center;
   padding: 12px;
@@ -379,11 +454,13 @@ body {
   opacity: .3;
 }
 
+/* ─── Animations ─── */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* ─── Falling petals canvas ─── */
 #petals {
   position: fixed;
   inset: 0;
@@ -395,29 +472,30 @@ body {
 </head>
 <body>
 
+<!-- ═══ DOOR OVERLAY ═══ -->
 <div class="doors-overlay" id="doors" onclick="openDoors()">
+
+  <!-- Left door -->
   <div class="door door-right" id="doorR">
-    <div class="door-inner">
-      <div class="door-ornament"></div>
-      <div class="door-letter">ه</div>
-      <div class="door-ornament"></div>
-    </div>
+    <img src="door2.webp" alt="door">
   </div>
+
+  <!-- Right door -->
   <div class="door door-left" id="doorL">
-    <div class="door-inner">
-      <div class="door-ornament"></div>
-      <div class="door-letter">ع</div>
-      <div class="door-ornament"></div>
-    </div>
+    <img src="door1.webp" alt="door">
   </div>
+
 </div>
 <div class="door-hint" id="doorHint">✦ تفضلوا بالدخول ✦</div>
 
+<!-- ═══ FALLING PETALS ═══ -->
 <canvas id="petals"></canvas>
 
+<!-- ═══ MAIN CARD ═══ -->
 <div class="card-wrap">
   <div class="card" id="mainCard">
 
+    <!-- Top floral decoration -->
     <div class="floral-top">
       <svg viewBox="0 0 440 130" xmlns="http://www.w3.org/2000/svg">
         <defs>
@@ -432,6 +510,7 @@ body {
           <filter id="blur1"><feGaussianBlur stdDeviation="3"/></filter>
           <filter id="blur2"><feGaussianBlur stdDeviation="5"/></filter>
         </defs>
+        <!-- Left cluster -->
         <ellipse cx="0" cy="0" rx="120" ry="80" fill="url(#gf1)"/>
         <ellipse cx="35" cy="25" rx="38" ry="22" fill="#c5a0d4" opacity=".45" filter="url(#blur1)" transform="rotate(-20 35 25)"/>
         <ellipse cx="15" cy="55" rx="30" ry="16" fill="#b890c8" opacity=".5" filter="url(#blur1)" transform="rotate(-40 15 55)"/>
@@ -440,22 +519,30 @@ body {
         <ellipse cx="80" cy="35" rx="18" ry="9" fill="#d4b0e0" opacity=".3" filter="url(#blur2)" transform="rotate(30 80 35)"/>
         <circle cx="30" cy="18" r="8" fill="#e0c8ec" opacity=".5" filter="url(#blur1)"/>
         <circle cx="55" cy="40" r="5" fill="#dcc0e8" opacity=".45" filter="url(#blur1)"/>
+        <ellipse cx="5" cy="85" rx="22" ry="12" fill="#c5a0d4" opacity=".3" filter="url(#blur2)" transform="rotate(-30 5 85)"/>
         <ellipse cx="90" cy="55" rx="14" ry="5" fill="#8aaa78" opacity=".3" filter="url(#blur1)" transform="rotate(50 90 55)"/>
+        <ellipse cx="70" cy="65" rx="12" ry="4" fill="#7a9a68" opacity=".25" filter="url(#blur1)" transform="rotate(30 70 65)"/>
+        <!-- Right cluster -->
         <ellipse cx="440" cy="0" rx="120" ry="80" fill="url(#gf2)"/>
         <ellipse cx="405" cy="25" rx="38" ry="22" fill="#c5a0d4" opacity=".45" filter="url(#blur1)" transform="rotate(20 405 25)"/>
         <ellipse cx="425" cy="55" rx="30" ry="16" fill="#b890c8" opacity=".5" filter="url(#blur1)" transform="rotate(40 425 55)"/>
         <ellipse cx="375" cy="15" rx="25" ry="13" fill="#d8b8e4" opacity=".4" filter="url(#blur1)" transform="rotate(-15 375 15)"/>
         <ellipse cx="390" cy="50" rx="20" ry="10" fill="#a878b8" opacity=".35" filter="url(#blur1)"/>
+        <ellipse cx="360" cy="35" rx="18" ry="9" fill="#d4b0e0" opacity=".3" filter="url(#blur2)" transform="rotate(-30 360 35)"/>
         <circle cx="410" cy="18" r="8" fill="#e0c8ec" opacity=".5" filter="url(#blur1)"/>
         <circle cx="385" cy="40" r="5" fill="#dcc0e8" opacity=".45" filter="url(#blur1)"/>
+        <ellipse cx="435" cy="85" rx="22" ry="12" fill="#c5a0d4" opacity=".3" filter="url(#blur2)" transform="rotate(30 435 85)"/>
         <ellipse cx="350" cy="55" rx="14" ry="5" fill="#8aaa78" opacity=".3" filter="url(#blur1)" transform="rotate(-50 350 55)"/>
+        <ellipse cx="370" cy="65" rx="12" ry="4" fill="#7a9a68" opacity=".25" filter="url(#blur1)" transform="rotate(-30 370 65)"/>
       </svg>
     </div>
 
     <div class="content">
 
+      <!-- Verse -->
       <div class="verse" data-anim>وَخَلَقْنَاكُمْ أَزْوَاجاً</div>
 
+      <!-- Families -->
       <div class="families" data-anim>
         <div class="fam-col">
           <div class="fam-label">أهل العريس</div>
@@ -469,16 +556,25 @@ body {
         </div>
       </div>
 
+      <!-- Invite -->
       <div class="invite-text" data-anim>
-        نتشرف بدعوتكم لحضور حفل<br><strong style="font-size:1.35rem">زفاف</strong>
+        نتشرف بدعوتكم لحضور <br><strong style="font-size:1.35rem">عقد قران</strong>
       </div>
 
       <!-- ═══ LUXURY NAMES ═══ -->
       <div class="names-row" data-anim>
 
-        <div class="name-wrapper">
-          <div class="name-big">عبد الرحمن</div>
-          <div class="name-underline"></div>
+        <div class="name-block">
+          <div class="name-ornament-wrap">
+            <div class="corner-tl"></div>
+            <div class="corner-br"></div>
+            <div class="name-big">عبد الرحمن</div>
+            <div class="name-divider">
+              <div class="div-line"></div>
+              <div class="div-gem"></div>
+              <div class="div-line"></div>
+            </div>
+          </div>
         </div>
 
         <svg class="rings-icon" viewBox="0 0 80 70" xmlns="http://www.w3.org/2000/svg">
@@ -503,13 +599,22 @@ body {
           <path d="M 38 18 A 20 20 0 0 1 66 28" fill="none" stroke="rgba(255,235,160,0.6)" stroke-width="2.5" stroke-linecap="round"/>
         </svg>
 
-        <div class="name-wrapper">
-          <div class="name-big">هديل</div>
-          <div class="name-underline"></div>
+        <div class="name-block">
+          <div class="name-ornament-wrap">
+            <div class="corner-tl"></div>
+            <div class="corner-br"></div>
+            <div class="name-big">هديل</div>
+            <div class="name-divider">
+              <div class="div-line"></div>
+              <div class="div-gem"></div>
+              <div class="div-line"></div>
+            </div>
+          </div>
         </div>
 
       </div>
 
+      <!-- Blessing -->
       <div class="blessing" data-anim>
         بارك الله لهما وبارك عليهما<br>
         وجمع بينهما في خير
@@ -541,12 +646,14 @@ body {
 
     <div class="content">
 
+      <!-- Location info -->
       <div class="location-info" data-anim>
         📍 حد جامع الغزالي<br>
         حلويات نور المدينة<br>
         في منزل جدة المخطوبة
       </div>
 
+      <!-- Buttons -->
       <div class="btn-stack" data-anim>
         <a href="https://www.google.com/maps?ll=33.465193259819976,36.32324543343949&q=33.465193259819976,36.32324543343949" target="_blank" class="btn btn-purple">
           📍 موقع المنزل
@@ -555,6 +662,7 @@ body {
 
     </div>
 
+    <!-- Bottom floral -->
     <div class="floral-bottom">
       <svg viewBox="0 0 440 100" xmlns="http://www.w3.org/2000/svg">
         <defs>
@@ -584,6 +692,7 @@ body {
 </div>
 
 <script>
+/* ═══ DOORS ═══ */
 let opened = false;
 function openDoors() {
   if (opened) return;
@@ -598,6 +707,7 @@ function openDoors() {
   }, 1500);
 }
 
+/* ═══ CARD REVEAL + STAGGERED ANIMATIONS ═══ */
 function showCard() {
   const card = document.getElementById('mainCard');
   card.classList.add('show');
@@ -608,42 +718,74 @@ function showCard() {
   startPetals();
 }
 
+/* ═══ FALLING PETALS ═══ */
 function startPetals() {
   const c = document.getElementById('petals');
   const ctx = c.getContext('2d');
   let W, H;
   function resize() { W = c.width = innerWidth; H = c.height = innerHeight; }
   resize(); window.addEventListener('resize', resize);
+
   const petals = [];
   const colors = [
-    'rgba(197,160,212,.18)','rgba(184,144,200,.15)',
-    'rgba(216,184,228,.13)','rgba(200,170,180,.13)','rgba(168,120,184,.12)',
+    'rgba(197,160,212,.18)',
+    'rgba(184,144,200,.15)',
+    'rgba(216,184,228,.13)',
+    'rgba(200,170,180,.13)',
+    'rgba(168,120,184,.12)',
   ];
+
   for (let i = 0; i < 18; i++) {
     petals.push({
-      x: Math.random() * W, y: Math.random() * -H,
-      w: Math.random() * 8 + 4, h: Math.random() * 5 + 3,
+      x: Math.random() * W,
+      y: Math.random() * -H,
+      w: Math.random() * 8 + 4,
+      h: Math.random() * 5 + 3,
       rot: Math.random() * 360,
-      dx: (Math.random() - .5) * .4, dy: Math.random() * .6 + .3,
+      dx: (Math.random() - .5) * .4,
+      dy: Math.random() * .6 + .3,
       dr: (Math.random() - .5) * 1.2,
       color: colors[Math.floor(Math.random() * colors.length)],
       wobble: Math.random() * Math.PI * 2,
     });
   }
+
   function draw() {
     ctx.clearRect(0, 0, W, H);
     petals.forEach(p => {
       p.x += p.dx + Math.sin(p.wobble) * .3;
-      p.y += p.dy; p.rot += p.dr; p.wobble += .015;
+      p.y += p.dy;
+      p.rot += p.dr;
+      p.wobble += .015;
       if (p.y > H + 20) { p.y = -20; p.x = Math.random() * W; }
-      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot * Math.PI / 180);
-      ctx.beginPath(); ctx.ellipse(0, 0, p.w, p.h, 0, 0, Math.PI * 2);
-      ctx.fillStyle = p.color; ctx.fill(); ctx.restore();
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot * Math.PI / 180);
+      ctx.beginPath();
+      ctx.ellipse(0, 0, p.w, p.h, 0, 0, Math.PI * 2);
+      ctx.fillStyle = p.color;
+      ctx.fill();
+      ctx.restore();
     });
     requestAnimationFrame(draw);
   }
   draw();
 }
+
+/* ═══ ACTIONS ═══ */
+function confirmAttend() {
+  const msg = encodeURIComponent('السلام عليكم، أود تأكيد حضوري لحفل زفاف عبد الرحمن وهديل بإذن الله 🌸');
+  window.open('https://wa.me/?text=' + msg, '_blank');
+}
+
+function addCalendar() {
+  const s = '20260522T170000', e = '20260522T210000';
+  const t = encodeURIComponent('حفل زفاف عبد الرحمن وهديل');
+  const d = encodeURIComponent('يلدا — حد جامع الغزالي، حلويات نور المدينة');
+  window.open('https://www.google.com/calendar/render?action=TEMPLATE&text=' + t + '&dates=' + s + '/' + e + '&details=' + d, '_blank');
+}
 </script>
+
 </body>
+</html>
 </html>
