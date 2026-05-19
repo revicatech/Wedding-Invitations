@@ -3,10 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>دعوة عقد قران — عبد الرحمن و هديل</title>
+<title>دعوة زفاف — عبد الرحمن و هديل</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Scheherazade+New:wght@400;700&family=Aref+Ruqaa+Ink:wght@400;700&family=Reem+Kufi:wght@400..700&display=swap" rel="stylesheet">
+<style>
+@font-face {
+  font-family: 'RpBold';
+  src: url('RpBold.ttf') format('truetype'),
+       url('RpBold.woff2') format('woff2'),
+       url('RpBold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+</style>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
@@ -278,7 +288,7 @@ body {
 
 /* The luxury name text */
 .name-big {
-  font-family: 'Reem Kufi', serif;
+  font-family: 'RpBold', 'Reem Kufi', serif;
   font-size: 2.4rem;
   font-weight: 700;
   background: linear-gradient(
@@ -558,23 +568,14 @@ body {
 
       <!-- Invite -->
       <div class="invite-text" data-anim>
-        نتشرف بدعوتكم لحضور <br><strong style="font-size:1.35rem">عقد قران</strong>
+        نتشرف بدعوتكم لحضور حفل<br><strong style="font-size:1.35rem">زفاف</strong>
       </div>
 
       <!-- ═══ LUXURY NAMES ═══ -->
       <div class="names-row" data-anim>
 
         <div class="name-block">
-          <div class="name-ornament-wrap">
-            <div class="corner-tl"></div>
-            <div class="corner-br"></div>
-            <div class="name-big">عبد الرحمن</div>
-            <div class="name-divider">
-              <div class="div-line"></div>
-              <div class="div-gem"></div>
-              <div class="div-line"></div>
-            </div>
-          </div>
+          <div class="name-big">عبد الرحمن</div>
         </div>
 
         <svg class="rings-icon" viewBox="0 0 80 70" xmlns="http://www.w3.org/2000/svg">
@@ -600,16 +601,7 @@ body {
         </svg>
 
         <div class="name-block">
-          <div class="name-ornament-wrap">
-            <div class="corner-tl"></div>
-            <div class="corner-br"></div>
-            <div class="name-big">هديل</div>
-            <div class="name-divider">
-              <div class="div-line"></div>
-              <div class="div-gem"></div>
-              <div class="div-line"></div>
-            </div>
-          </div>
+          <div class="name-big">هديل</div>
         </div>
 
       </div>
@@ -781,11 +773,10 @@ function confirmAttend() {
 function addCalendar() {
   const s = '20260522T170000', e = '20260522T210000';
   const t = encodeURIComponent('حفل زفاف عبد الرحمن وهديل');
-  const d = encodeURIComponent('يلدا — حد جامع الغزالي، حلويات نور المدينة');
+  const d = encodeURIComponent('يلدا — جانب جامع الغزالي، حلويات نور المدينة');
   window.open('https://www.google.com/calendar/render?action=TEMPLATE&text=' + t + '&dates=' + s + '/' + e + '&details=' + d, '_blank');
 }
 </script>
 
 </body>
-</html>
 </html>
