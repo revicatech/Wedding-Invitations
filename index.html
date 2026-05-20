@@ -6,750 +6,780 @@
 <title>دعوة عقد قران — عبد الرحمن و هديل</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Scheherazade+New:wght@400;500;600;700&family=Aref+Ruqaa+Ink:wght@400;700&family=Reem+Kufi+Fun:wght@400..700&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Scheherazade+New:wght@400;700&family=Aref+Ruqaa+Ink:wght@400;700&family=Reem+Kufi:wght@400..700&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+@font-face {
+  font-family: 'RpBold';
+  src: url('RpBold.ttf') format('truetype'),
+       url('RpBold.woff2') format('woff2'),
+       url('RpBold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+</style>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
 :root {
-  --cream:       #F8F4EF;
-  --cream-dark:  #EDE5D8;
-  --ink:         #1C1108;
-  --ink-soft:    #3D2B1A;
-  --gold:        #C8A45C;
-  --gold-light:  #E2C98A;
-  --gold-pale:   #F0E0BC;
-  --gold-dark:   #8A6830;
-  --plum:        #5A2D4E;
-  --plum-light:  #7D4A6E;
-  --plum-pale:   #E8D5E2;
-  --rose:        #A04060;
-  --border:      rgba(200,164,92,.25);
+  --bg-main: #F7F3EE;
+  --bg-card: #F3EEE8;
+  --bg-card-secondary: #EFE7DC;
+  --title-color: #2F2118;
+  --text-color: #4A372B;
+  --gold: #C6A46A;
+  --gold-dark: #9A7A45;
+  --bride-color: #A14E63;
+  --groom-color: #7B3E4A;
+  --accent: #8D6E8F;
+  --border-color: #DCCFC2;
+  --shadow: rgba(120, 90, 60, 0.08);
+  --plum: #5C2E4F;
+  --dusty-rose: #B07A8C;
+  --burgundy: #4B1F2F;
+  --soft-mauve: #9B7A92;
+
+  --cream: #F7F3EE;
+  --gold-light: #D9BC90;
+  --gold-pale: #EAD9BC;
+  --purple: var(--accent);
+  --purple-dark: var(--groom-color);
+  --purple-light: var(--soft-mauve);
+  --purple-pale: #E8DCE8;
+  --text: var(--title-color);
+  --text-soft: var(--text-color);
 }
 
 html { scroll-behavior: smooth; }
 
 body {
+  margin: 0;
   font-family: 'Amiri', serif;
-  background: var(--cream);
+  background: url('bg.webp') center center / cover fixed;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-  min-height: 100vh;
-  min-height: 100dvh;
 }
 
-/* ═══════════════════════
+/* ═══════════════════════════════════
    DOOR INTRO
-═══════════════════════ */
-#intro {
-  position: fixed;
-  inset: 0;
-  z-index: 900;
+   ═══════════════════════════════════ */
+.doors-overlay {
+  position: fixed; inset: 0; z-index: 1000;
   display: flex;
-  align-items: stretch;
-  pointer-events: auto;
-  background: #100808;
+  cursor: pointer;
 }
 
-.door-panel {
+.door {
   flex: 1;
-  overflow: hidden;
   position: relative;
-  transition: transform 1.5s cubic-bezier(.77,0,.18,1);
+  transition: transform 1.4s cubic-bezier(.76, 0, .17, 1);
+  overflow: hidden;
 }
-.door-panel img {
+.door img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
+  object-position: center;
   display: block;
-  pointer-events: none;
-  user-select: none;
 }
 
-/* seam glow */
-.door-panel.door-l { box-shadow: inset -2px 0 8px rgba(200,164,92,.18); }
-.door-panel.door-r { box-shadow: inset  2px 0 8px rgba(200,164,92,.18); }
+.door-left {
+  box-shadow: inset -1px 0 0 rgba(182,149,69,.3);
+}
+.door-right {
+  box-shadow: inset 1px 0 0 rgba(182,149,69,.3);
+}
 
-.door-panel.door-l.open { transform: translateX(-100%); }
-.door-panel.door-r.open { transform: translateX(100%); }
+.door-left.open  { transform: translateX(-105%); }
+.door-right.open { transform: translateX(105%); }
 
-#open-btn {
+.door-btn {
   position: fixed;
-  bottom: max(44px, 8vh);
+  bottom: max(40px, 7vh);
   left: 50%;
   transform: translateX(-50%);
-  z-index: 910;
+  z-index: 1001;
   cursor: pointer;
-  border: 1px solid var(--gold);
-  border-radius: 4px;
-  padding: 14px 36px;
-  background: rgba(10,5,2,.78);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: linear-gradient(135deg, rgba(30,16,8,0.82), rgba(50,28,12,0.88));
+  border: 1.5px solid var(--gold);
+  border-radius: 6px;
+  padding: 16px 38px;
   text-align: center;
   white-space: nowrap;
-  animation: breathe 2.8s ease-in-out infinite;
-  transition: opacity .3s;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.45), 0 0 0 1px rgba(198,164,106,0.18) inset;
+  animation: hintPulse 2.4s ease-in-out infinite;
+  transition: transform .15s ease, box-shadow .15s ease;
 }
-#open-btn:hover { background: rgba(20,10,4,.9); }
-#open-btn .btn-ar {
+.door-btn:hover {
+  transform: translateX(-50%) translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.55), 0 0 0 1px rgba(198,164,106,0.3) inset;
+}
+.door-btn:active {
+  transform: translateX(-50%) scale(.97);
+}
+.door-btn-text {
   display: block;
   font-family: 'Scheherazade New', serif;
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   font-weight: 700;
-  color: var(--gold-light);
-  letter-spacing: 3px;
+  color: var(--gold);
+  letter-spacing: 2px;
 }
-#open-btn .btn-en {
+.door-btn-sub {
   display: block;
-  font-family: 'Scheherazade New', serif;
-  font-size: .65rem;
-  color: rgba(200,164,92,.5);
-  letter-spacing: 4px;
+  font-family: 'Amiri', serif;
+  font-size: .72rem;
+  color: rgba(198,164,106,0.6);
+  letter-spacing: 3px;
   margin-top: 3px;
 }
-@keyframes breathe {
-  0%,100% { opacity:.8; box-shadow: 0 0 0 0 rgba(200,164,92,0); }
-  50% { opacity:1; box-shadow: 0 0 18px 4px rgba(200,164,92,.12); }
+@keyframes hintPulse {
+  0%,100% { opacity: .85; } 50% { opacity: 1; }
 }
 
-/* ═══════════════════════
-   BACKGROUND
-═══════════════════════ */
-#bg {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  background: url('bg.webp') center/cover no-repeat fixed;
-  opacity: 0;
-  transition: opacity 1s .5s ease;
-}
-#bg.show { opacity: 1; }
-
-/* petals canvas */
-#petals {
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity .8s 1.2s;
-}
-#petals.show { opacity: 1; }
-
-/* ═══════════════════════
-   CARD WRAPPER
-═══════════════════════ */
-#wrap {
-  position: relative;
-  z-index: 2;
+/* ═══════════════════════════════════
+   MAIN CARD
+   ═══════════════════════════════════ */
+.card-wrap {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  padding: 20px 12px 40px;
   min-height: 100vh;
   min-height: 100dvh;
-  padding: 24px 14px 48px;
 }
 
-/* ═══════════════════════
-   MAIN CARD
-═══════════════════════ */
 .card {
+  background: rgba(243, 238, 232, 0.93);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid var(--border-color);
   width: 100%;
   max-width: 440px;
-  background: rgba(248,244,239,.94);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-radius: 18px;
-  border: 1px solid var(--border);
+  border-radius: 20px;
   overflow: hidden;
   box-shadow:
-    0 24px 64px rgba(0,0,0,.28),
-    0 4px 12px rgba(0,0,0,.12),
-    inset 0 1px 0 rgba(255,255,255,.45);
+    0 20px 60px rgba(0,0,0,.35),
+    0 2px 6px rgba(0,0,0,.15),
+    inset 0 1px 0 rgba(255,255,255,0.3);
+  position: relative;
   opacity: 0;
-  transform: translateY(24px) scale(.98);
-  transition: opacity .9s .3s ease, transform .9s .3s ease;
+  transform: translateY(20px);
 }
 .card.show {
-  opacity: 1;
-  transform: translateY(0) scale(1);
+  animation: cardIn .8s .2s ease both;
+}
+@keyframes cardIn {
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* ── FLORAL HEADER SVG ── */
-.floral-header {
+/* ─── Floral watercolor corners (SVG) ─── */
+.floral-top, .floral-bottom {
   position: relative;
   width: 100%;
-  height: 140px;
-  pointer-events: none;
   overflow: hidden;
+  pointer-events: none;
 }
-.floral-header svg {
+.floral-top { height: 130px; }
+.floral-bottom { height: 100px; }
+.floral-top svg, .floral-bottom svg {
   position: absolute;
-  inset: 0;
   width: 100%;
   height: 100%;
 }
 
-/* ── INNER CONTENT ── */
-.inner {
-  padding: 0 30px 0;
+/* ─── Content ─── */
+.content {
+  padding: 0 28px;
   text-align: center;
 }
 
-/* Quranic verse */
+/* Verse */
 .verse {
   font-family: 'Scheherazade New', serif;
-  font-size: clamp(1.9rem, 7vw, 2.5rem);
+  font-size: clamp(2rem, 6.5vw, 2.6rem);
   font-weight: 700;
-  color: var(--gold-dark);
-  line-height: 1.9;
-  margin-bottom: 6px;
-  position: relative;
-}
-.verse-ref {
-  font-family: 'Amiri', serif;
-  font-size: .78rem;
-  color: var(--plum-light);
-  letter-spacing: 1px;
-  margin-bottom: 24px;
-  opacity: .75;
-}
-
-/* thin gold rule */
-.rule {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 0 auto 22px;
-  width: 80%;
-}
-.rule-line { flex: 1; height: 1px; background: linear-gradient(to var(--dir, right), transparent, var(--gold), transparent); }
-.rule-dot { width: 5px; height: 5px; background: var(--gold); transform: rotate(45deg); flex-shrink: 0; }
-
-/* Families */
-.families {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 22px;
-}
-.fam {
-  flex: 1;
-  padding: 12px 8px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  background: rgba(90,45,78,.04);
-}
-.fam-tag { font-size: .65rem; color: var(--plum-light); letter-spacing: 1.5px; margin-bottom: 5px; }
-.fam-name { font-family: 'Amiri', serif; font-size: .88rem; font-weight: 700; color: var(--ink); line-height: 1.8; }
-.fam-rip { font-size: .72rem; color: var(--ink-soft); opacity: .65; margin-top: 1px; }
-
-/* Invite label */
-.invite {
-  font-family: 'Scheherazade New', serif;
-  font-size: 1.15rem;
-  color: var(--plum);
-  line-height: 2.1;
-  margin-bottom: 16px;
-}
-.invite strong {
-  font-size: 1.4rem;
-  color: var(--ink);
-}
-
-/* ─── NAMES ─── */
-.names {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin: 6px 0 20px;
-}
-.name-wrap {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.name-frame {
-  position: relative;
-  padding: 8px 10px 12px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-/* corner brackets */
-.nf-tl, .nf-tr, .nf-bl, .nf-br {
-  position: absolute;
-  width: 14px; height: 14px;
-}
-.nf-tl { top:0; right:0; border-top: 1.5px solid var(--gold); border-right: 1.5px solid var(--gold); }
-.nf-tr { top:0; left:0;  border-top: 1.5px solid var(--gold); border-left: 1.5px solid var(--gold); }
-.nf-bl { bottom:0; right:0; border-bottom: 1.5px solid var(--gold); border-right: 1.5px solid var(--gold); }
-.nf-br { bottom:0; left:0;  border-bottom: 1.5px solid var(--gold); border-left: 1.5px solid var(--gold); }
-
-.name-text {
-  font-family: 'Aref Ruqaa Ink', serif;
-  font-size: clamp(2rem, 8vw, 2.6rem);
-  font-weight: 700;
-  color: var(--gold-dark);
-  line-height: 1.1;
-  letter-spacing: 1px;
-  position: relative;
-}
-/* shimmer layer */
-.name-text::after {
-  content: attr(data-name);
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(160deg, #f7e8a8 0%, var(--gold-light) 35%, var(--gold) 55%, var(--gold-dark) 75%, var(--gold) 90%);
+  background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 40%, var(--gold-dark) 70%, var(--gold) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  text-shadow: none;
+  filter: drop-shadow(0 1px 2px rgba(154,122,69,.25));
+  line-height: 2;
+  margin-top: -18px;
+  margin-bottom: 20px;
+  opacity: 0;
 }
-.name-underline {
+.verse.anim { animation: fadeUp .7s .4s ease both; }
+
+/* Families row */
+.families {
   display: flex;
-  align-items: center;
-  gap: 4px;
-  width: 80%;
-  margin-top: 5px;
+  gap: 12px;
+  margin-bottom: 24px;
+  opacity: 0;
 }
-.nu-line { flex:1; height:1px; background: linear-gradient(to var(--dir, right), transparent, var(--gold), transparent); }
-.nu-gem  { width:4px; height:4px; background:var(--gold); transform:rotate(45deg); flex-shrink:0; }
+.families.anim { animation: fadeUp .7s .6s ease both; }
 
-/* rings SVG */
-.rings { width: 60px; flex-shrink: 0; }
-
-/* Blessing */
-.blessing {
-  font-family: 'Scheherazade New', serif;
-  font-size: 1rem;
-  color: var(--ink-soft);
-  line-height: 2.2;
-  margin-bottom: 22px;
-}
-
-/* ─── DETAILS STRIP ─── */
-.details {
-  display: flex;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  margin: 0 -30px 22px;
-  padding: 14px 6px;
-}
-.det {
+.fam-col {
   flex: 1;
   text-align: center;
+  padding: 14px 8px;
+  background: linear-gradient(160deg, rgba(123,94,167,.06), rgba(123,94,167,.01));
+  border: 1px solid rgba(123,94,167,.12);
+  border-radius: 12px;
 }
-.det-lbl {
-  display: block;
-  font-size: .58rem;
-  color: var(--plum-light);
-  letter-spacing: 2px;
-  margin-bottom: 3px;
+.fam-label {
+  font-size: .72rem;
+  color: var(--purple);
+  letter-spacing: 1px;
+  margin-bottom: 6px;
 }
-.det-val {
-  font-family: 'Scheherazade New', serif;
-  font-size: .95rem;
-  font-weight: 700;
-  color: var(--ink);
-  line-height: 1.4;
-}
-.det-val small {
-  display: block;
-  font-size: .68rem;
-  font-weight: 400;
-  color: var(--ink-soft);
-}
-.det-sep { width: 1px; background: var(--border); align-self: stretch; }
-
-/* ─── LOCATION ─── */
-.location {
+.fam-name {
   font-family: 'Amiri', serif;
-  font-size: .9rem;
-  color: var(--ink-soft);
-  line-height: 2;
-  margin-bottom: 20px;
+  font-size: .92rem;
+  color: var(--text);
+  font-weight: 700;
+  line-height: 1.7;
+}
+.fam-rip {
+  font-size: .78rem;
+  color: var(--text-soft);
+  opacity: .7;
 }
 
-/* ─── MAP BUTTON ─── */
-.btn-map {
+/* Invite text */
+.invite-text {
+  color: var(--purple);
+  font-size: 1.2rem;
+  line-height: 2;
+  margin-bottom: 10px;
+  opacity: 0;
+}
+.invite-text.anim { animation: fadeUp .7s .8s ease both; }
+
+/* ═══ LUXURY NAMES ═══ */
+.names-row {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
+  margin: 8px 0 18px;
+  opacity: 0;
+}
+.names-row.anim { animation: scaleIn .8s 1s ease both; }
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(.85); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.name-block {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.name-ornament-wrap {
+  position: relative;
+  padding: 10px 6px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
+}
+
+/* Corner brackets */
+.name-ornament-wrap::before,
+.name-ornament-wrap::after {
+  content: '';
+  position: absolute;
+  width: 16px; height: 16px;
+}
+.name-ornament-wrap::before {
+  top: 0; right: 0;
+  border-top: 1.5px solid var(--gold);
+  border-right: 1.5px solid var(--gold);
+}
+.name-ornament-wrap::after {
+  bottom: 0; left: 0;
+  border-bottom: 1.5px solid var(--gold);
+  border-left: 1.5px solid var(--gold);
+}
+.corner-tl, .corner-br {
+  position: absolute;
+  width: 16px; height: 16px;
+}
+.corner-tl { top: 0; left: 0; border-top: 1.5px solid var(--gold); border-left: 1.5px solid var(--gold); }
+.corner-br { bottom: 0; right: 0; border-bottom: 1.5px solid var(--gold); border-right: 1.5px solid var(--gold); }
+
+/* The luxury name text */
+.name-big {
+  font-family: 'Aref Ruqaa Ink', serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  background: linear-gradient(
+    170deg,
+    #f5e6a0 0%,
+    #e8c96a 18%,
+    #C6A46A 38%,
+    #9A7A45 55%,
+    #C6A46A 72%,
+    #e8c96a 88%,
+    #f5e6a0 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 2px 5px rgba(154,122,69,.45));
+  line-height: 1.15;
+  letter-spacing: 2px;
+}
+
+/* Decorative underline */
+.name-divider {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 85%;
+  margin-top: 6px;
+}
+.div-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+}
+.div-gem {
+  width: 5px; height: 5px;
+  background: var(--gold);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+/* Middle separator */
+.name-sep {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  flex-shrink: 0;
+}
+.sep-line {
+  width: 1px; height: 16px;
+  background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+}
+.sep-diamond {
+  width: 7px; height: 7px;
+  background: var(--gold);
+  transform: rotate(45deg);
+}
+
+.rings-icon {
+  width: 64px;
+  flex-shrink: 0;
+}
+
+/* Blessing */
+.blessing {
+  font-size: 1rem;
+  color: var(--text-soft);
+  line-height: 2;
+  margin-bottom: 22px;
+  opacity: 0;
+}
+.blessing.anim { animation: fadeUp .7s 1.2s ease both; }
+
+/* Gold divider */
+.gold-line {
+  width: 60px;
+  height: 1.5px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+  margin: 0 auto 20px;
+}
+
+/* ─── Details table ─── */
+.details-bar {
+  display: flex;
+  border-top: 1px solid rgba(123,94,167,.12);
+  border-bottom: 1px solid rgba(123,94,167,.12);
+  margin: 0 -28px 20px;
+  padding: 14px 8px;
+  opacity: 0;
+}
+.details-bar.anim { animation: fadeUp .7s 1.35s ease both; }
+
+.det-col {
+  flex: 1;
+  text-align: center;
+}
+.det-label {
+  display: block;
+  font-size: .60rem;
+  color: var(--purple);
+  letter-spacing: 1.5px;
+  margin-bottom: 4px;
+}
+.det-val {
+  font-family: 'Scheherazade New', serif;
+  font-size: 0.975rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.5;
+}
+.det-val small {
+  display: block;
+  font-size: .70rem;
+  font-weight: 400;
+  color: var(--text-soft);
+}
+.det-sep {
+  width: 1px;
+  background: rgba(123,94,167,.15);
+  align-self: stretch;
+}
+
+/* Location */
+.location-info {
+  font-size: .88rem;
+  color: var(--text-soft);
+  line-height: 1.9;
+  margin-bottom: 18px;
+  opacity: 0;
+}
+.location-info.anim { animation: fadeUp .7s 1.5s ease both; }
+
+/* Buttons */
+.btn-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 4px;
+  margin-bottom: 8px;
+  opacity: 0;
+}
+.btn-stack.anim { animation: fadeUp .7s 1.7s ease both; }
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   padding: 13px 20px;
-  margin-bottom: 24px;
   border-radius: 50px;
-  background: linear-gradient(135deg, var(--plum), var(--plum-light));
-  color: #fff;
   font-family: 'Amiri', serif;
   font-size: 1rem;
-  font-weight: 700;
-  text-decoration: none;
-  border: none;
   cursor: pointer;
-  box-shadow: 0 4px 18px rgba(90,45,78,.25);
-  transition: transform .15s, box-shadow .15s;
+  border: none;
+  text-decoration: none;
+  transition: transform .15s ease, box-shadow .15s ease;
 }
-.btn-map:hover { transform: translateY(-2px); box-shadow: 0 7px 24px rgba(90,45,78,.35); }
-.btn-map:active { transform: scale(.97); }
+.btn:active { transform: scale(.97); }
 
-/* ─── FOOTER ─── */
-.floral-footer {
-  position: relative;
-  width: 100%;
-  height: 90px;
-  pointer-events: none;
-  overflow: hidden;
+.btn-purple {
+  background: linear-gradient(135deg, var(--purple), var(--purple-light));
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(123,94,167,.3);
 }
-.floral-footer svg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-.card-foot {
+.btn-purple:hover { box-shadow: 0 6px 22px rgba(123,94,167,.45); transform: translateY(-1px); }
+
+/* Footer inside card */
+.card-footer {
   text-align: center;
-  padding: 10px;
-  font-size: .68rem;
-  color: var(--plum-light);
-  opacity: .4;
+  padding: 12px;
+  font-size: .7rem;
+  color: var(--text-soft);
+  opacity: .3;
 }
 
-/* ═══════════════════════
-   STAGGER ANIMATIONS
-═══════════════════════ */
-.fade-up {
-  opacity: 0;
-  transform: translateY(14px);
-  transition: opacity .65s ease, transform .65s ease;
+/* ─── Animations ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
-.fade-up.show { opacity: 1; transform: translateY(0); }
 
-/* individual delays set inline via style */
-
-@keyframes scaleReveal {
-  from { opacity:0; transform:scale(.88); }
-  to   { opacity:1; transform:scale(1); }
+/* ─── Falling petals canvas ─── */
+#petals {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
 }
-.scale-reveal { opacity:0; }
-.scale-reveal.show { animation: scaleReveal .75s ease both; }
+.card-wrap { position: relative; z-index: 1; }
 </style>
 </head>
 <body>
 
 <!-- ═══ DOOR OVERLAY ═══ -->
-<div id="intro">
-  <div class="door-panel door-l" id="doorL">
-    <img src="door1.webp" alt="">
+<div class="doors-overlay" id="doors">
+
+  <!-- Left door -->
+  <div class="door door-right" id="doorR">
+    <img src="door2.webp" alt="door">
   </div>
-  <div class="door-panel door-r" id="doorR">
-    <img src="door2.webp" alt="">
+
+  <!-- Right door -->
+  <div class="door door-left" id="doorL">
+    <img src="door1.webp" alt="door">
+  </div>
+
+</div>
+<div class="door-btn" id="doorHint" onclick="openDoors()">
+  <span class="door-btn-text">✦ تفضلوا بالدخول ✦</span>
+  <span class="door-btn-sub">اضغط للدخول</span>
+</div>
+
+<!-- ═══ FALLING PETALS ═══ -->
+<canvas id="petals"></canvas>
+
+<!-- ═══ MAIN CARD ═══ -->
+<div class="card-wrap">
+  <div class="card" id="mainCard">
+
+    <!-- Top floral decoration -->
+    <div class="floral-top">
+      <svg viewBox="0 0 440 130" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="gf1" cx="0%" cy="0%" r="60%">
+            <stop offset="0%" stop-color="#c9a0d8" stop-opacity=".55"/>
+            <stop offset="100%" stop-color="#c9a0d8" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="gf2" cx="100%" cy="0%" r="60%">
+            <stop offset="0%" stop-color="#c9a0d8" stop-opacity=".55"/>
+            <stop offset="100%" stop-color="#c9a0d8" stop-opacity="0"/>
+          </radialGradient>
+          <filter id="blur1"><feGaussianBlur stdDeviation="3"/></filter>
+          <filter id="blur2"><feGaussianBlur stdDeviation="5"/></filter>
+        </defs>
+        <!-- Left cluster -->
+        <ellipse cx="0" cy="0" rx="120" ry="80" fill="url(#gf1)"/>
+        <ellipse cx="35" cy="25" rx="38" ry="22" fill="#c5a0d4" opacity=".45" filter="url(#blur1)" transform="rotate(-20 35 25)"/>
+        <ellipse cx="15" cy="55" rx="30" ry="16" fill="#b890c8" opacity=".5" filter="url(#blur1)" transform="rotate(-40 15 55)"/>
+        <ellipse cx="65" cy="15" rx="25" ry="13" fill="#d8b8e4" opacity=".4" filter="url(#blur1)" transform="rotate(15 65 15)"/>
+        <ellipse cx="50" cy="50" rx="20" ry="10" fill="#a878b8" opacity=".35" filter="url(#blur1)"/>
+        <ellipse cx="80" cy="35" rx="18" ry="9" fill="#d4b0e0" opacity=".3" filter="url(#blur2)" transform="rotate(30 80 35)"/>
+        <circle cx="30" cy="18" r="8" fill="#e0c8ec" opacity=".5" filter="url(#blur1)"/>
+        <circle cx="55" cy="40" r="5" fill="#dcc0e8" opacity=".45" filter="url(#blur1)"/>
+        <ellipse cx="5" cy="85" rx="22" ry="12" fill="#c5a0d4" opacity=".3" filter="url(#blur2)" transform="rotate(-30 5 85)"/>
+        <ellipse cx="90" cy="55" rx="14" ry="5" fill="#8aaa78" opacity=".3" filter="url(#blur1)" transform="rotate(50 90 55)"/>
+        <ellipse cx="70" cy="65" rx="12" ry="4" fill="#7a9a68" opacity=".25" filter="url(#blur1)" transform="rotate(30 70 65)"/>
+        <!-- Right cluster -->
+        <ellipse cx="440" cy="0" rx="120" ry="80" fill="url(#gf2)"/>
+        <ellipse cx="405" cy="25" rx="38" ry="22" fill="#c5a0d4" opacity=".45" filter="url(#blur1)" transform="rotate(20 405 25)"/>
+        <ellipse cx="425" cy="55" rx="30" ry="16" fill="#b890c8" opacity=".5" filter="url(#blur1)" transform="rotate(40 425 55)"/>
+        <ellipse cx="375" cy="15" rx="25" ry="13" fill="#d8b8e4" opacity=".4" filter="url(#blur1)" transform="rotate(-15 375 15)"/>
+        <ellipse cx="390" cy="50" rx="20" ry="10" fill="#a878b8" opacity=".35" filter="url(#blur1)"/>
+        <ellipse cx="360" cy="35" rx="18" ry="9" fill="#d4b0e0" opacity=".3" filter="url(#blur2)" transform="rotate(-30 360 35)"/>
+        <circle cx="410" cy="18" r="8" fill="#e0c8ec" opacity=".5" filter="url(#blur1)"/>
+        <circle cx="385" cy="40" r="5" fill="#dcc0e8" opacity=".45" filter="url(#blur1)"/>
+        <ellipse cx="435" cy="85" rx="22" ry="12" fill="#c5a0d4" opacity=".3" filter="url(#blur2)" transform="rotate(30 435 85)"/>
+        <ellipse cx="350" cy="55" rx="14" ry="5" fill="#8aaa78" opacity=".3" filter="url(#blur1)" transform="rotate(-50 350 55)"/>
+        <ellipse cx="370" cy="65" rx="12" ry="4" fill="#7a9a68" opacity=".25" filter="url(#blur1)" transform="rotate(-30 370 65)"/>
+      </svg>
+    </div>
+
+    <div class="content">
+
+      <!-- Verse -->
+      <div class="verse" data-anim>وَخَلَقْنَاكُمْ أَزْوَاجاً</div>
+
+      <!-- Families -->
+      <div class="families" data-anim>
+        <div class="fam-col">
+          <div class="fam-label">أهل العريس</div>
+          <div class="fam-name">الحاج هيثم<br>فتال يبرودي</div>
+          <div class="fam-name" style="margin-top:2px">وعائلته</div>
+        </div>
+        <div class="fam-col">
+          <div class="fam-label">أهل العروس</div>
+          <div class="fam-name">المرحوم<br>عامر خليفه</div>
+          <div class="fam-name" style="margin-top:2px">وعائلته</div>
+        </div>
+      </div>
+
+      <!-- Invite -->
+      <div class="invite-text" data-anim>
+        نتشرف بدعوتكم لحضور حفل<br><strong style="font-size:1.35rem">عقد قران</strong>
+      </div>
+
+      <!-- ═══ LUXURY NAMES ═══ -->
+      <div class="names-row" data-anim>
+
+        <div class="name-block">
+          <div class="name-big">عبد الرحمن</div>
+        </div>
+
+        <svg class="rings-icon" viewBox="0 0 80 70" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="rg1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#D9BC90"/>
+              <stop offset="40%" stop-color="#C6A46A"/>
+              <stop offset="70%" stop-color="#B8944A"/>
+              <stop offset="100%" stop-color="#9A7A45"/>
+            </linearGradient>
+            <linearGradient id="rg2" x1="100%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#D9BC90"/>
+              <stop offset="40%" stop-color="#C6A46A"/>
+              <stop offset="70%" stop-color="#B8944A"/>
+              <stop offset="100%" stop-color="#9A7A45"/>
+            </linearGradient>
+            <filter id="rs"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.18)"/></filter>
+          </defs>
+          <circle cx="28" cy="38" r="20" fill="none" stroke="url(#rg1)" stroke-width="6" filter="url(#rs)"/>
+          <circle cx="52" cy="38" r="20" fill="none" stroke="url(#rg2)" stroke-width="6" filter="url(#rs)"/>
+          <path d="M 14 28 A 20 20 0 0 1 34 18" fill="none" stroke="rgba(255,235,160,0.6)" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M 38 18 A 20 20 0 0 1 66 28" fill="none" stroke="rgba(255,235,160,0.6)" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+
+        <div class="name-block">
+          <div class="name-big">هديل</div>
+        </div>
+
+      </div>
+
+      <!-- Blessing -->
+      <div class="blessing" data-anim>
+        بارك الله لهما وبارك عليهما<br>
+        وجمع بينهما في خير
+      </div>
+
+      <div class="gold-line"></div>
+
+    </div>
+
+    <!-- Details bar -->
+    <div class="details-bar" data-anim>
+      <div class="det-col">
+        <span class="det-label">الساعة</span>
+        <span class="det-val">5:00
+          <small>مساءً</small>
+        </span>
+      </div>
+      <div class="det-sep"></div>
+      <div class="det-col">
+        <span class="det-label">المكان</span>
+        <span class="det-val">يلدا</span>
+      </div>
+      <div class="det-sep"></div>
+      <div class="det-col">
+        <span class="det-label">الجمعة</span>
+        <span class="det-val">22.05.2026</span>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- Location info -->
+      <div class="location-info" data-anim>
+        📍 جانب جامع الغزالي<br>
+        حلويات نور المدينة<br>
+        في منزل جد المخطوبة أبو بشار رحمه الله
+      </div>
+
+      <!-- Buttons -->
+      <div class="btn-stack" data-anim>
+        <a href="https://www.google.com/maps?ll=33.465193259819976,36.32324543343949&q=33.465193259819976,36.32324543343949" target="_blank" class="btn btn-purple">
+          📍 موقع المنزل
+        </a>
+      </div>
+
+    </div>
+
+    <!-- Bottom floral -->
+    <div class="floral-bottom">
+      <svg viewBox="0 0 440 100" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="gf3" cx="0%" cy="100%" r="60%">
+            <stop offset="0%" stop-color="#c9a0d8" stop-opacity=".45"/>
+            <stop offset="100%" stop-color="#c9a0d8" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="gf4" cx="100%" cy="100%" r="60%">
+            <stop offset="0%" stop-color="#c9a0d8" stop-opacity=".45"/>
+            <stop offset="100%" stop-color="#c9a0d8" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <ellipse cx="0" cy="100" rx="110" ry="70" fill="url(#gf3)"/>
+        <ellipse cx="30" cy="80" rx="32" ry="18" fill="#c5a0d4" opacity=".4" filter="url(#blur1)" transform="rotate(25 30 80)"/>
+        <ellipse cx="55" cy="90" rx="22" ry="12" fill="#b890c8" opacity=".35" filter="url(#blur1)"/>
+        <circle cx="20" cy="70" r="6" fill="#e0c8ec" opacity=".4" filter="url(#blur1)"/>
+        <ellipse cx="440" cy="100" rx="110" ry="70" fill="url(#gf4)"/>
+        <ellipse cx="410" cy="80" rx="32" ry="18" fill="#c5a0d4" opacity=".4" filter="url(#blur1)" transform="rotate(-25 410 80)"/>
+        <ellipse cx="385" cy="90" rx="22" ry="12" fill="#b890c8" opacity=".35" filter="url(#blur1)"/>
+        <circle cx="420" cy="70" r="6" fill="#e0c8ec" opacity=".4" filter="url(#blur1)"/>
+      </svg>
+    </div>
+
+    <div class="card-footer">عبد الرحمن ♡ هديل — ٢٠٢٦</div>
+
   </div>
 </div>
 
-<button id="open-btn" onclick="openDoors()" aria-label="افتح الدعوة">
-  <span class="btn-ar">✦ تفضلوا بالدخول ✦</span>
-  <span class="btn-en">tap to open</span>
-</button>
-
-<!-- ═══ BACKGROUND + PETALS ═══ -->
-<div id="bg"></div>
-<canvas id="petals"></canvas>
-
-<!-- ═══ CARD ═══ -->
-<div id="wrap">
-<article class="card" id="card" role="main">
-
-  <!-- Floral header -->
-  <div class="floral-header" aria-hidden="true">
-    <svg viewBox="0 0 440 140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-      <defs>
-        <filter id="fb"><feGaussianBlur stdDeviation="4"/></filter>
-        <filter id="fs"><feGaussianBlur stdDeviation="7"/></filter>
-        <filter id="fd"><feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="rgba(160,120,60,.2)"/></filter>
-      </defs>
-      <!-- left bloom -->
-      <g filter="url(#fb)" opacity=".55">
-        <ellipse cx="0"  cy="10"  rx="90" ry="60" fill="#c9a0d8"/>
-        <ellipse cx="40" cy="30"  rx="50" ry="28" fill="#d4b0e0"/>
-        <ellipse cx="10" cy="70"  rx="40" ry="22" fill="#b890c8"/>
-        <ellipse cx="65" cy="18"  rx="32" ry="15" fill="#e0c8ec"/>
-        <ellipse cx="75" cy="50"  rx="20" ry="10" fill="#9a80b5"/>
-        <circle  cx="35" cy="14"  r="9"            fill="#dcc0e8"/>
-        <ellipse cx="90" cy="60"  rx="12" ry="5"  fill="#8aaa78" transform="rotate(45 90 60)"/>
-        <ellipse cx="60" cy="75"  rx="10" ry="4"  fill="#7a9a68" transform="rotate(30 60 75)"/>
-      </g>
-      <!-- right bloom (mirrored) -->
-      <g filter="url(#fb)" opacity=".55">
-        <ellipse cx="440" cy="10"  rx="90" ry="60" fill="#c9a0d8"/>
-        <ellipse cx="400" cy="30"  rx="50" ry="28" fill="#d4b0e0"/>
-        <ellipse cx="430" cy="70"  rx="40" ry="22" fill="#b890c8"/>
-        <ellipse cx="375" cy="18"  rx="32" ry="15" fill="#e0c8ec"/>
-        <ellipse cx="365" cy="50"  rx="20" ry="10" fill="#9a80b5"/>
-        <circle  cx="405" cy="14"  r="9"            fill="#dcc0e8"/>
-        <ellipse cx="350" cy="60"  rx="12" ry="5"  fill="#8aaa78" transform="rotate(-45 350 60)"/>
-        <ellipse cx="380" cy="75"  rx="10" ry="4"  fill="#7a9a68" transform="rotate(-30 380 75)"/>
-      </g>
-      <!-- soft center fade -->
-      <rect x="130" y="0" width="180" height="140" fill="rgba(248,244,239,.6)" filter="url(#fs)"/>
-      <!-- gold top line -->
-      <line x1="60" y1="135" x2="380" y2="135" stroke="#c8a45c" stroke-width=".8" opacity=".4"/>
-      <polygon points="220,131 222,135 220,139 218,135" fill="#c8a45c" opacity=".6"/>
-    </svg>
-  </div>
-
-  <!-- CONTENT -->
-  <div class="inner">
-
-    <div class="verse fade-up" style="transition-delay:.1s">وَخَلَقْنَاكُمْ أَزْوَاجاً</div>
-    <div class="verse-ref fade-up" style="transition-delay:.2s">— سورة النبأ، آية ٨</div>
-
-    <div class="rule fade-up" style="transition-delay:.3s">
-      <div class="rule-line" style="--dir:right"></div>
-      <div class="rule-dot"></div>
-      <div class="rule-line" style="--dir:left"></div>
-    </div>
-
-    <!-- Families -->
-    <div class="families fade-up" style="transition-delay:.4s">
-      <div class="fam">
-        <div class="fam-tag">أهل العريس</div>
-        <div class="fam-name">الحاج هيثم<br>فتال يبرودي</div>
-        <div class="fam-name">وعائلته</div>
-      </div>
-      <div class="fam">
-        <div class="fam-tag">أهل العروس</div>
-        <div class="fam-name">المرحوم<br>عامر خليفه</div>
-        <div class="fam-rip">رحمه الله</div>
-        <div class="fam-name">وعائلته</div>
-      </div>
-    </div>
-
-    <!-- Invite -->
-    <div class="invite fade-up" style="transition-delay:.5s">
-      يتشرفون بدعوتكم لحضور حفل<br>
-      <strong>عقد قران</strong>
-    </div>
-
-    <!-- Names -->
-    <div class="names scale-reveal" style="transition-delay:.65s; animation-delay:.65s">
-
-      <div class="name-wrap">
-        <div class="name-frame">
-          <span class="nf-tl"></span><span class="nf-tr"></span>
-          <span class="nf-bl"></span><span class="nf-br"></span>
-          <div class="name-text" data-name="عبد الرحمن">عبد الرحمن</div>
-          <div class="name-underline">
-            <div class="nu-line" style="--dir:right"></div>
-            <div class="nu-gem"></div>
-            <div class="nu-line" style="--dir:left"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Rings SVG -->
-      <svg class="rings" viewBox="0 0 72 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <defs>
-          <linearGradient id="rg1" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%"   stop-color="#E2C98A"/>
-            <stop offset="45%"  stop-color="#C8A45C"/>
-            <stop offset="80%"  stop-color="#9A7A45"/>
-            <stop offset="100%" stop-color="#C8A45C"/>
-          </linearGradient>
-          <linearGradient id="rg2" x1="100%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%"   stop-color="#E2C98A"/>
-            <stop offset="45%"  stop-color="#C8A45C"/>
-            <stop offset="80%"  stop-color="#9A7A45"/>
-            <stop offset="100%" stop-color="#C8A45C"/>
-          </linearGradient>
-          <filter id="rs"><feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-color="rgba(0,0,0,.2)"/></filter>
-        </defs>
-        <circle cx="26" cy="35" r="19" fill="none" stroke="url(#rg1)" stroke-width="5.5" filter="url(#rs)"/>
-        <circle cx="46" cy="35" r="19" fill="none" stroke="url(#rg2)" stroke-width="5.5" filter="url(#rs)"/>
-        <path d="M13 25 A19 19 0 0 1 32 16" fill="none" stroke="rgba(255,240,170,.6)" stroke-width="2" stroke-linecap="round"/>
-        <path d="M40 16 A19 19 0 0 1 59 25" fill="none" stroke="rgba(255,240,170,.6)" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-
-      <div class="name-wrap">
-        <div class="name-frame">
-          <span class="nf-tl"></span><span class="nf-tr"></span>
-          <span class="nf-bl"></span><span class="nf-br"></span>
-          <div class="name-text" data-name="هديل">هديل</div>
-          <div class="name-underline">
-            <div class="nu-line" style="--dir:right"></div>
-            <div class="nu-gem"></div>
-            <div class="nu-line" style="--dir:left"></div>
-          </div>
-        </div>
-      </div>
-
-    </div><!-- /names -->
-
-    <!-- Blessing -->
-    <div class="blessing fade-up" style="transition-delay:.8s">
-      بارك الله لهما وبارك عليهما<br>وجمع بينهما في خير
-    </div>
-
-    <div class="rule fade-up" style="transition-delay:.85s">
-      <div class="rule-line" style="--dir:right"></div>
-      <div class="rule-dot"></div>
-      <div class="rule-line" style="--dir:left"></div>
-    </div>
-
-  </div><!-- /inner -->
-
-  <!-- Details strip -->
-  <div class="details fade-up" style="transition-delay:.95s">
-    <div class="det">
-      <span class="det-lbl">الساعة</span>
-      <span class="det-val">5:00 <small>مساءً</small></span>
-    </div>
-    <div class="det-sep"></div>
-    <div class="det">
-      <span class="det-lbl">المكان</span>
-      <span class="det-val">يلدا</span>
-    </div>
-    <div class="det-sep"></div>
-    <div class="det">
-      <span class="det-lbl">الجمعة</span>
-      <span class="det-val">22<small>مايو 2026</small></span>
-    </div>
-  </div>
-
-  <div class="inner">
-    <!-- Location -->
-    <div class="location fade-up" style="transition-delay:1.05s">
-      📍 جانب جامع الغزالي<br>
-      حلويات نور المدينة<br>
-      <span style="font-size:.8rem; opacity:.7">في منزل جد المخطوبة أبو بشار رحمه الله</span>
-    </div>
-
-    <!-- Map btn -->
-    <a href="https://www.google.com/maps?ll=33.465193259819976,36.32324543343949&q=33.465193259819976,36.32324543343949"
-       target="_blank" rel="noopener" class="btn-map fade-up" style="transition-delay:1.15s">
-      📍 موقع المنزل على الخريطة
-    </a>
-  </div>
-
-  <!-- Floral footer -->
-  <div class="floral-footer" aria-hidden="true">
-    <svg viewBox="0 0 440 90" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-      <defs>
-        <filter id="fb2"><feGaussianBlur stdDeviation="4"/></filter>
-      </defs>
-      <line x1="60" y1="4" x2="380" y2="4" stroke="#c8a45c" stroke-width=".8" opacity=".4"/>
-      <polygon points="220,0 222,4 220,8 218,4" fill="#c8a45c" opacity=".6"/>
-      <g filter="url(#fb2)" opacity=".5">
-        <ellipse cx="0"   cy="90" rx="100" ry="65" fill="#c9a0d8"/>
-        <ellipse cx="35"  cy="75" rx="42"  ry="22" fill="#d4b0e0"/>
-        <ellipse cx="60"  cy="88" rx="28"  ry="14" fill="#b890c8"/>
-        <circle  cx="22"  cy="66" r="7"             fill="#e0c8ec"/>
-      </g>
-      <g filter="url(#fb2)" opacity=".5">
-        <ellipse cx="440" cy="90" rx="100" ry="65" fill="#c9a0d8"/>
-        <ellipse cx="405" cy="75" rx="42"  ry="22" fill="#d4b0e0"/>
-        <ellipse cx="380" cy="88" rx="28"  ry="14" fill="#b890c8"/>
-        <circle  cx="418" cy="66" r="7"             fill="#e0c8ec"/>
-      </g>
-    </svg>
-  </div>
-
-  <div class="card-foot">عبد الرحمن ♡ هديل — ٢٠٢٦</div>
-
-</article>
-</div><!-- /wrap -->
-
 <script>
-/* ── DOORS ── */
-let doorsOpen = false;
-
+/* ═══ DOORS ═══ */
+let opened = false;
 function openDoors() {
-  if (doorsOpen) return;
-  doorsOpen = true;
-
-  const btn = document.getElementById('open-btn');
-  btn.style.transition = 'opacity .4s';
-  btn.style.opacity = '0';
-  btn.style.pointerEvents = 'none';
-
+  if (opened) return;
+  opened = true;
   document.getElementById('doorL').classList.add('open');
   document.getElementById('doorR').classList.add('open');
-
+  document.getElementById('doorHint').style.opacity = '0';
   setTimeout(() => {
-    const intro = document.getElementById('intro');
-    intro.style.transition = 'opacity .5s';
-    intro.style.opacity = '0';
-    setTimeout(() => { intro.style.display = 'none'; btn.style.display = 'none'; }, 500);
-  }, 1400);
-
-  setTimeout(showCard, 900);
+    document.getElementById('doors').style.display = 'none';
+    document.getElementById('doorHint').style.display = 'none';
+    showCard();
+  }, 1500);
 }
 
-/* click anywhere on doors too */
-document.getElementById('intro').addEventListener('click', openDoors);
-
-/* ── CARD REVEAL ── */
+/* ═══ CARD REVEAL + STAGGERED ANIMATIONS ═══ */
 function showCard() {
-  document.getElementById('bg').classList.add('show');
-  document.getElementById('petals').classList.add('show');
-
-  const card = document.getElementById('card');
+  const card = document.getElementById('mainCard');
   card.classList.add('show');
-
-  /* stagger fade-up elements */
-  const els = card.querySelectorAll('.fade-up, .scale-reveal');
-  els.forEach(el => {
-    const delay = parseFloat(el.style.transitionDelay || el.style.animationDelay || 0) * 1000;
-    setTimeout(() => el.classList.add('show'), delay);
+  const items = card.querySelectorAll('[data-anim]');
+  items.forEach((el, i) => {
+    setTimeout(() => el.classList.add('anim'), 400 + i * 200);
   });
-
   startPetals();
 }
 
-/* ── PETALS ── */
+/* ═══ FALLING PETALS ═══ */
 function startPetals() {
-  const canvas = document.getElementById('petals');
-  const ctx = canvas.getContext('2d');
+  const c = document.getElementById('petals');
+  const ctx = c.getContext('2d');
   let W, H;
+  function resize() { W = c.width = innerWidth; H = c.height = innerHeight; }
+  resize(); window.addEventListener('resize', resize);
 
-  function resize() { W = canvas.width = innerWidth; H = canvas.height = innerHeight; }
-  resize();
-  window.addEventListener('resize', resize);
-
-  const COLORS = [
-    'rgba(201,160,216,.16)',
-    'rgba(184,144,200,.13)',
-    'rgba(216,184,228,.12)',
-    'rgba(200,170,185,.12)',
-    'rgba(168,120,184,.10)',
-    'rgba(232,200,180,.10)',
+  const petals = [];
+  const colors = [
+    'rgba(197,160,212,.18)',
+    'rgba(184,144,200,.15)',
+    'rgba(216,184,228,.13)',
+    'rgba(200,170,180,.13)',
+    'rgba(168,120,184,.12)',
   ];
 
-  const petals = Array.from({ length: 22 }, () => ({
-    x:  Math.random() * window.innerWidth,
-    y:  Math.random() * -window.innerHeight,
-    w:  Math.random() * 9 + 4,
-    h:  Math.random() * 5 + 2.5,
-    rot: Math.random() * 360,
-    dx: (Math.random() - .5) * .35,
-    dy: Math.random() * .55 + .28,
-    dr: (Math.random() - .5) * 1.1,
-    wb: Math.random() * Math.PI * 2,
-    color: COLORS[Math.floor(Math.random() * COLORS.length)],
-  }));
+  for (let i = 0; i < 18; i++) {
+    petals.push({
+      x: Math.random() * W,
+      y: Math.random() * -H,
+      w: Math.random() * 8 + 4,
+      h: Math.random() * 5 + 3,
+      rot: Math.random() * 360,
+      dx: (Math.random() - .5) * .4,
+      dy: Math.random() * .6 + .3,
+      dr: (Math.random() - .5) * 1.2,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      wobble: Math.random() * Math.PI * 2,
+    });
+  }
 
-  (function draw() {
+  function draw() {
     ctx.clearRect(0, 0, W, H);
     petals.forEach(p => {
-      p.x += p.dx + Math.sin(p.wb) * .28;
+      p.x += p.dx + Math.sin(p.wobble) * .3;
       p.y += p.dy;
       p.rot += p.dr;
-      p.wb += .014;
+      p.wobble += .015;
       if (p.y > H + 20) { p.y = -20; p.x = Math.random() * W; }
       ctx.save();
       ctx.translate(p.x, p.y);
@@ -761,7 +791,21 @@ function startPetals() {
       ctx.restore();
     });
     requestAnimationFrame(draw);
-  })();
+  }
+  draw();
+}
+
+/* ═══ ACTIONS ═══ */
+function confirmAttend() {
+  const msg = encodeURIComponent('السلام عليكم، أود تأكيد حضوري عقد قران عبد الرحمن وهديل بإذن الله 🌸');
+  window.open('https://wa.me/?text=' + msg, '_blank');
+}
+
+function addCalendar() {
+  const s = '20260522T170000', e = '20260522T210000';
+  const t = encodeURIComponent('حفل عقد قران عبد الرحمن وهديل');
+  const d = encodeURIComponent('يلدا — جانب جامع الغزالي، حلويات نور المدينة');
+  window.open('https://www.google.com/calendar/render?action=TEMPLATE&text=' + t + '&dates=' + s + '/' + e + '&details=' + d, '_blank');
 }
 </script>
 
