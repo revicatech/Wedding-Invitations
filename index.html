@@ -3,10 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>دعوة عقد قران — عبد الرحمن و هديل</title>
+<title>دعوة زفاف — عبد الرحمن و هديل</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Scheherazade+New:wght@400;700&family=Aref+Ruqaa+Ink:wght@400;700&family=Reem+Kufi:wght@400..700&display=swap" rel="stylesheet">
+<style>
+@font-face {
+  font-family: 'RpBold';
+  src: url('RpBold.ttf') format('truetype'),
+       url('RpBold.woff2') format('woff2'),
+       url('RpBold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+</style>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
@@ -43,7 +53,7 @@ html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
-  font-family: 'Scheherazade New', serif;
+  font-family: 'Amiri', serif;
   background: url('bg.webp') center center / cover fixed;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
@@ -82,22 +92,50 @@ body {
 .door-left.open  { transform: translateX(-105%); }
 .door-right.open { transform: translateX(105%); }
 
-.door-hint {
+.door-btn {
   position: fixed;
-  bottom: max(40px, 6vh);
+  bottom: max(40px, 7vh);
   left: 50%;
   transform: translateX(-50%);
   z-index: 1001;
-  color: var(--gold);
-  font-family: 'Scheherazade New', serif;
-  font-size: 1rem;
-  animation: hintPulse 2.2s ease-in-out infinite;
+  cursor: pointer;
+  background: linear-gradient(135deg, rgba(30,16,8,0.82), rgba(50,28,12,0.88));
+  border: 1.5px solid var(--gold);
+  border-radius: 6px;
+  padding: 16px 38px;
+  text-align: center;
   white-space: nowrap;
-  letter-spacing: 1px;
-  pointer-events: none;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.45), 0 0 0 1px rgba(198,164,106,0.18) inset;
+  animation: hintPulse 2.4s ease-in-out infinite;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.door-btn:hover {
+  transform: translateX(-50%) translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.55), 0 0 0 1px rgba(198,164,106,0.3) inset;
+}
+.door-btn:active {
+  transform: translateX(-50%) scale(.97);
+}
+.door-btn-text {
+  display: block;
+  font-family: 'Scheherazade New', serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 2px;
+}
+.door-btn-sub {
+  display: block;
+  font-family: 'Amiri', serif;
+  font-size: .72rem;
+  color: rgba(198,164,106,0.6);
+  letter-spacing: 3px;
+  margin-top: 3px;
 }
 @keyframes hintPulse {
-  0%,100% { opacity: .45; } 50% { opacity: 1; }
+  0%,100% { opacity: .85; } 50% { opacity: 1; }
 }
 
 /* ═══════════════════════════════════
@@ -158,7 +196,7 @@ body {
 
 /* Verse */
 .verse {
-  font-family: 'Aref Ruqaa', serif;
+  font-family: 'Scheherazade New', serif;
   font-size: clamp(2rem, 6.5vw, 2.6rem);
   font-weight: 700;
   background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 40%, var(--gold-dark) 70%, var(--gold) 100%);
@@ -198,7 +236,7 @@ body {
   margin-bottom: 6px;
 }
 .fam-name {
-  font-family: 'Scheherazade New', serif;
+  font-family: 'Amiri', serif;
   font-size: .92rem;
   color: var(--text);
   font-weight: 700;
@@ -278,7 +316,7 @@ body {
 
 /* The luxury name text */
 .name-big {
-  font-family: 'Aref Ruqaa', serif;
+  font-family: 'RpBold', 'Reem Kufi', serif;
   font-size: 2.4rem;
   font-weight: 700;
   background: linear-gradient(
@@ -429,7 +467,7 @@ body {
   gap: 8px;
   padding: 13px 20px;
   border-radius: 50px;
-  font-family: 'Scheherazade New', serif;
+  font-family: 'Amiri', serif;
   font-size: 1rem;
   cursor: pointer;
   border: none;
@@ -473,7 +511,7 @@ body {
 <body>
 
 <!-- ═══ DOOR OVERLAY ═══ -->
-<div class="doors-overlay" id="doors" onclick="openDoors()">
+<div class="doors-overlay" id="doors">
 
   <!-- Left door -->
   <div class="door door-right" id="doorR">
@@ -486,7 +524,10 @@ body {
   </div>
 
 </div>
-<div class="door-hint" id="doorHint">✦ تفضلوا بالدخول ✦</div>
+<div class="door-btn" id="doorHint" onclick="openDoors()">
+  <span class="door-btn-text">✦ تفضلوا بالدخول ✦</span>
+  <span class="door-btn-sub">اضغط للدخول</span>
+</div>
 
 <!-- ═══ FALLING PETALS ═══ -->
 <canvas id="petals"></canvas>
@@ -558,7 +599,7 @@ body {
 
       <!-- Invite -->
       <div class="invite-text" data-anim>
-        نتشرف بدعوتكم لحضور <br><strong style="font-size:1.35rem">عقد قران</strong>
+        نتشرف بدعوتكم لحضور حفل<br><strong style="font-size:1.35rem">زفاف</strong>
       </div>
 
       <!-- ═══ LUXURY NAMES ═══ -->
@@ -630,7 +671,7 @@ body {
 
       <!-- Location info -->
       <div class="location-info" data-anim>
-        📍 جانب جامع الغزالي<br>
+        📍 حد جامع الغزالي<br>
         حلويات نور المدينة<br>
         في منزل جدة المخطوبة
       </div>
@@ -755,11 +796,15 @@ function startPetals() {
 }
 
 /* ═══ ACTIONS ═══ */
+function confirmAttend() {
+  const msg = encodeURIComponent('السلام عليكم، أود تأكيد حضوري لحفل زفاف عبد الرحمن وهديل بإذن الله 🌸');
+  window.open('https://wa.me/?text=' + msg, '_blank');
+}
 
 function addCalendar() {
   const s = '20260522T170000', e = '20260522T210000';
-  const t = encodeURIComponent('حفل عقد قران عبد الرحمن وهديل');
-  const d = encodeURIComponent('يلدا — جانب جامع الغزالي، حلويات نور المدينة');
+  const t = encodeURIComponent('حفل زفاف عبد الرحمن وهديل');
+  const d = encodeURIComponent('يلدا — حد جامع الغزالي، حلويات نور المدينة');
   window.open('https://www.google.com/calendar/render?action=TEMPLATE&text=' + t + '&dates=' + s + '/' + e + '&details=' + d, '_blank');
 }
 </script>
